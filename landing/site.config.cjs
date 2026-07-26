@@ -28,11 +28,14 @@ module.exports = {
     // VERIFY BEFORE LAUNCH — taken from the existing site's structured data.
     phone: '(720) 605-0727',
     phoneE164: '+17206050727',
-    // Second, fixed number registered as a Google Ads call asset. It must never
-    // be swapped by dynamic number insertion or Google's verification fails.
-    // Leave empty until one exists — the footer entry renders only when set.
-    callAssetPhone: '',
-    callAssetE164: '',
+    // Second, fixed number registered as a Google Ads call asset. Google checks
+    // that this number appears on the landing page; if dynamic number insertion
+    // rewrites it, that check fails and the call asset stops serving. It is
+    // rendered in the footer only, carrying ghl-no-swap / data-no-swap so the
+    // number pool script leaves it alone. Build assertions enforce that it is
+    // present, marked no-swap, and appears exactly once.
+    callAssetPhone: '(720) 477-4896',
+    callAssetE164: '+17204774896',
     email: '',                                   // none published on the current site
     street: '1440 Sheridan Boulevard',
     city: 'Denver',

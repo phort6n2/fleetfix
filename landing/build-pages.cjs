@@ -519,6 +519,28 @@ for (const p of PAGES) {
   if (d && decode(d).length > 158) problems.push(`${p.slug || '/'}: meta description ${decode(d).length} chars (max 158)`);
   if (t && decode(t).length > 62) problems.push(`${p.slug || '/'}: title ${decode(t).length} chars (max 62)`);
 
+  /* The Google Ads call asset number must appear on the page and must be
+     exempt from dynamic number insertion. If the pool script swaps it, Google's
+     verification of the call asset fails and the asset stops serving — a silent
+     failure, since the page still looks fine. */
+  if (B.callAssetE164) {
+    // E.164 numbers start with "+", which is a regex quantifier — escape before
+    // building a pattern from one.
+    const esc164 = B.callAssetE164.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const anchor = new RegExp(`<a[^>]*href="tel:${esc164}"[^>]*>`);
+    const tag = (html.match(anchor) || [])[0];
+    if (!tag) problems.push(`${p.slug || '/'}: call asset number missing from the page`);
+    else if (!/ghl-no-swap/.test(tag) || !/data-no-swap="true"/.test(tag)) {
+      problems.push(`${p.slug || '/'}: call asset number is not marked no-swap`);
+    }
+    // It must also be the ONLY place that number appears, so DNI has nothing
+    // else to catch and visitors are not given two different numbers to call.
+    const occurrences = (html.match(new RegExp(esc164, 'g')) || []).length;
+    if (occurrences > 1) {
+      problems.push(`${p.slug || '/'}: call asset number appears ${occurrences}x (footer only)`);
+    }
+  }
+
   if (!/rel="canonical"/.test(html)) problems.push(`${p.slug || '/'}: no canonical`);
   if (!/application\/ld\+json/.test(html)) problems.push(`${p.slug || '/'}: no JSON-LD`);
   if (!/property="og:title"/.test(html)) problems.push(`${p.slug || '/'}: no Open Graph`);
