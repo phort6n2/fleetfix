@@ -1,11 +1,23 @@
 {
   "rating": 4.8,
   "count": 191,
-  "mapsUri": "https://www.google.com/maps?cid=13934619566903784372",
+  "mapsUri": "https://maps.google.com/?cid=13934619566903784372&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
   "placeName": "HV Auto Glass Denver",
-  "address": "Denver, CO",
+  "address": "1440 Sheridan Blvd, Denver, CO 80214, USA",
   "attributedTo": "HV Auto Glass Denver",
-  "quotes": [],
-  "fetchedAt": "2026-07-26T00:00:00.000Z",
-  "_provenance": "SEED — not yet fetched from the Places API. Rating and count taken from HV Auto Glass Denver's own published aggregateRating on quote.hvautoglassdenver.com, cross-checked against the CID in that page's Google Maps link (13934619566903784372). Quotes are deliberately empty: no review text is reproduced here because none has been verified through the API. Set REVIEWS.placeId in site.config.cjs and add the GOOGLE_PLACES_API_KEY repo secret, and the weekly workflow will overwrite this file with live data including quotes."
+  "fetchedAt": "2026-07-26T15:51:46.075Z",
+  "quotes": [
+    {
+      "author": "Adam DeBaere",
+      "text": "Absolute legends!! They came to my house got it done faster than I could cook macaroni!!! Perfect Job. Awesome and  respectful crew. Clean up was great and literally beat every other quote by $150 at least if not more.\nRecommend a million times over !!",
+      "rating": 5,
+      "when": "a month ago"
+    },
+    {
+      "author": "Sarah Cassel",
+      "text": "I was impressed!\n- best price (checked with 10 other companies)\n- easiest communication\n- fast and efficient\n\nI did have to wait 30ish minutes for them to arrive back to their shop and was late to a meeting,  but they were right about the camera recalibration! It's been three days and all is well.",
+      "rating": 5,
+      "when": "3 months ago"
+    }
+  ]
 }
