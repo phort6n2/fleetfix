@@ -142,13 +142,15 @@ Setup: enable **Places API (New)** (`places.googleapis.com` — *not* the legacy
 `places-backend.googleapis.com`, which 403s), create a key with application
 restrictions **None** and API restrictions limited to Places API (New), add it
 as the repo secret `GOOGLE_PLACES_API_KEY`, and put the Place ID in
-`site.config.cjs`.
+`REVIEWS.placeId` in `site.config.cjs`.
 
-The fetcher **asserts the resolved listing is FleetFix Glass in the Denver
-area** before writing anything, and exits 0 on any failure so a transient API
-error leaves the last good data in place. Do not remove that guard — a wrong
-Place ID fails silently and will publish another company's rating across every
-page.
+The fetcher **asserts the resolved listing matches `REVIEWS.expectName` and is
+in the expected locality** before writing anything — currently HV Auto Glass
+Denver, and FleetFix once the source switches. It exits 0 on any failure, so a
+transient API error leaves the last good data in place rather than blanking the
+site. Do not remove that guard: a wrong Place ID fails silently, because the
+numbers it returns look perfectly plausible, and it will publish another
+company's rating across every page.
 
 Note: **scheduled workflows only run from the default branch.** On a feature
 branch GitHub does not register the workflow at all.
