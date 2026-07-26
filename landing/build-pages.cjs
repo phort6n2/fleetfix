@@ -341,9 +341,12 @@ function render(page) {
 
   if (isLegal) {
     const content = fs.readFileSync(path.join(__dirname, page.legal), 'utf8');
+    // Attribute-tolerant: matching the literal `<main id="main">` broke the
+    // moment a tabindex was added to it, and legal pages silently rendered the
+    // whole marketing shell instead of their prose.
     html = html.replace(
-      /<main id="main">[\s\S]*?<\/main>/,
-      `<main id="main">
+      /<main id="main"[^>]*>[\s\S]*?<\/main>/,
+      `<main id="main" tabindex="-1">
 <section class="band">
   <div class="wrap"><div class="prose legal">${content}</div></div>
 </section>

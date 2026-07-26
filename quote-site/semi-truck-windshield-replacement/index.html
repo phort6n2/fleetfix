@@ -73,7 +73,7 @@
 :root{
   --navy:#12294b; --navy-2:#0d1e38; --navy-3:#1b3a68;
   --blue:#2f7ec4; --blue-2:#1f6bad; --blue-soft:#eaf3fb;
-  --ink:#16202e; --body:#465468; --muted:#6b788c;
+  --ink:#16202e; --body:#465468; --muted:#667285;
   --line:#dde4ed; --bg:#fff; --bg-2:#f5f8fc;
   --amber:#f5a524; --ok:#1a8a54; --err:#c22b2b;
   --r:12px; --r-lg:18px;
@@ -83,7 +83,10 @@
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+/* Keeps a focused element clear of the sticky header and the fixed mobile call
+   bar when focus moves by keyboard (WCAG 2.2 SC 2.4.11). body padding alone
+   only reserves space at the end of the document, not mid-page. */
+html{-webkit-text-size-adjust:100%;scroll-padding-top:86px;scroll-padding-bottom:92px}
 body{
   margin:0;font-family:var(--sans);color:var(--body);background:var(--bg);
   font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;
@@ -116,8 +119,8 @@ li{margin:0 0 .45em}
 .btn:active{transform:translateY(1px)}
 .btn-primary{background:var(--amber);color:#3a2600;box-shadow:0 2px 0 #c9861a}
 .btn-primary:hover{background:#ffb63d}
-.btn-blue{background:var(--blue);color:#fff;box-shadow:0 2px 0 var(--blue-2)}
-.btn-blue:hover{background:#3a8ed6}
+.btn-blue{background:var(--blue-2);color:#fff;box-shadow:0 2px 0 #17527f}
+.btn-blue:hover{background:#185a94}
 .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
 .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.7)}
 .btn-outline{background:#fff;color:var(--navy);border-color:var(--line)}
@@ -142,7 +145,7 @@ li{margin:0 0 .45em}
 .brand{flex:none;display:inline-flex;align-items:center;gap:11px;min-height:44px;text-decoration:none}
 .brand img{width:auto;height:52px}
 .brand-txt{display:none;font-weight:800;font-size:1.16rem;letter-spacing:-.035em;color:var(--navy);line-height:1;white-space:nowrap}
-.brand-txt b{color:var(--blue);font-weight:800}
+.brand-txt b{color:var(--blue-2);font-weight:800}
 .nav{display:none;margin-left:auto;align-items:center;gap:2px;min-width:0}
 .nav a{
   display:inline-flex;align-items:center;min-height:40px;padding:6px 10px;border-radius:9px;
@@ -207,6 +210,7 @@ li{margin:0 0 .45em}
   background:#fff;color:var(--ink);transition:border-color .15s,box-shadow .15s;
 }
 .field textarea{min-height:80px;resize:vertical;line-height:1.5}
+.field ::placeholder{color:var(--muted);opacity:1}
 .field select{appearance:none;cursor:pointer;padding-right:40px;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236b788c' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 12px center;
@@ -215,6 +219,13 @@ li{margin:0 0 .45em}
   outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(47,126,196,.18)
 }
 .field input[aria-invalid="true"],.field select[aria-invalid="true"]{border-color:var(--err);box-shadow:0 0 0 3px rgba(194,43,43,.13)}
+/* Must come AFTER the invalid rule. Both the :focus and [aria-invalid] rules
+   have equal specificity, so the later one won — meaning that after a failed
+   submit every field was red and NONE showed focus, exactly when a keyboard
+   user is navigating between errors. An explicit outline survives both. */
+.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{
+  outline:3px solid var(--blue);outline-offset:2px
+}
 .err{display:none;font-size:.8rem;color:var(--err);font-weight:600}
 .field.bad .err{display:block}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
@@ -295,7 +306,7 @@ a.card:hover .more{gap:9px}
 .card.is-current .ico{background:#fff}
 .card .more.is-here{color:var(--muted);font-weight:650}
 .card .more.is-here::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--blue);flex:none}
-.card-num{font:750 .8rem/1 var(--sans);letter-spacing:.08em;color:var(--blue);text-transform:uppercase;margin-bottom:10px;display:block}
+.card-num{font:750 .8rem/1 var(--sans);letter-spacing:.08em;color:var(--blue-2);text-transform:uppercase;margin-bottom:10px;display:block}
 
 /* reviews */
 .rating-hd{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-bottom:26px}
@@ -431,9 +442,9 @@ body{padding-bottom:76px}
 </style>
 </head>
 <body>
-<a class="skip" href="#quote">Skip to quote form</a>
+<a class="skip" href="#main">Skip to main content</a>
 
-<div class="topbar">
+<div class="topbar" role="region" aria-label="Opening hours and service area">
   <div class="wrap">
     <span class="topbar-i">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
@@ -456,15 +467,15 @@ body{padding-bottom:76px}
     <nav class="nav" aria-label="Primary"><a href="/">Home</a><a href="/windshield-replacement/">Windshields</a><a href="/windshield-repair/">Chip Repair</a><a href="/fleet-auto-glass/">Fleet Glass</a><a href="/truck-windshield-replacement/">Trucks</a><a href="/denver/">Denver</a></nav>
     <div class="hdr-cta">
       <a class="btn btn-primary hdr-quote" href="#quote">Free Quote</a>
-      <a class="hdr-tel" href="tel:+17206050727" data-ff-tel>
+      <a class="hdr-tel" href="tel:+17206050727" aria-label="Call FleetFix Glass at (720) 605-0727" data-ff-tel>
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2.1Z"/></svg>
-        <span class="lbl">(720) 605-0727</span><span class="sr">Call FleetFix Glass at (720) 605-0727</span>
+        <span class="lbl">(720) 605-0727</span>
       </a>
     </div>
   </div>
 </header>
 
-<main id="main">
+<main id="main" tabindex="-1">
 
 <section class="hero">
   <div class="wrap">
@@ -494,33 +505,33 @@ body{padding-bottom:76px}
 
             <div class="field">
               <label for="f-name">Name</label>
-              <input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Jane Doe">
-              <span class="err">Please enter your name.</span>
+              <input id="f-name" aria-describedby="f-name-err" name="name" type="text" autocomplete="name" required placeholder="Jane Doe">
+              <span class="err" id="f-name-err">Please enter your name.</span>
             </div>
             <div class="field">
               <label for="f-phone">Phone</label>
-              <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="(720) 555-0134">
-              <span class="err">Enter a 10-digit US phone number.</span>
+              <input id="f-phone" aria-describedby="f-phone-err" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="(720) 555-0134">
+              <span class="err" id="f-phone-err">Enter a 10-digit US phone number.</span>
             </div>
             <div class="field">
               <label for="f-email">Email</label>
-              <input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" required placeholder="jane@company.com">
-              <span class="err">Enter a valid email address.</span>
+              <input id="f-email" aria-describedby="f-email-err" name="email" type="email" inputmode="email" autocomplete="email" required placeholder="jane@company.com">
+              <span class="err" id="f-email-err">Enter a valid email address.</span>
             </div>
             <div class="field">
               <label for="f-zip">Service ZIP</label>
-              <input id="f-zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" required placeholder="80214">
-              <span class="err">Enter a 5-digit ZIP.</span>
+              <input id="f-zip" aria-describedby="f-zip-err" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" required placeholder="80214">
+              <span class="err" id="f-zip-err">Enter a 5-digit ZIP.</span>
             </div>
             <div class="field f-2">
               <label for="f-service">What do you need?</label>
-              <select id="f-service" name="service" required><option value="">Choose one…</option><option value="Windshield replacement">Windshield replacement</option><option value="Windshield chip / crack repair">Windshield chip / crack repair</option><option value="Fleet or multi-vehicle program">Fleet or multi-vehicle program</option><option value="Truck windshield (pickup, box truck)">Truck windshield (pickup, box truck)</option><option value="Semi truck windshield" selected>Semi truck windshield</option><option value="RV / motorhome windshield">RV / motorhome windshield</option><option value="Construction equipment glass">Construction equipment glass</option><option value="Side window / door glass">Side window / door glass</option><option value="Back glass">Back glass</option><option value="ADAS camera calibration">ADAS camera calibration</option><option value="Something else">Something else</option></select>
-              <span class="err">Please choose a service.</span>
+              <select id="f-service" aria-describedby="f-service-err" name="service" required><option value="">Choose one…</option><option value="Windshield replacement">Windshield replacement</option><option value="Windshield chip / crack repair">Windshield chip / crack repair</option><option value="Fleet or multi-vehicle program">Fleet or multi-vehicle program</option><option value="Truck windshield (pickup, box truck)">Truck windshield (pickup, box truck)</option><option value="Semi truck windshield" selected>Semi truck windshield</option><option value="RV / motorhome windshield">RV / motorhome windshield</option><option value="Construction equipment glass">Construction equipment glass</option><option value="Side window / door glass">Side window / door glass</option><option value="Back glass">Back glass</option><option value="ADAS camera calibration">ADAS camera calibration</option><option value="Something else">Something else</option></select>
+              <span class="err" id="f-service-err">Please choose a service.</span>
             </div>
             <div class="field f-2">
               <label for="f-vehicle">Vehicle <span class="hint">— year, make, model</span></label>
-              <input id="f-vehicle" name="vehicle" type="text" required placeholder="2021 Ford F-250 Super Duty">
-              <span class="err">Tell us the vehicle.</span>
+              <input id="f-vehicle" aria-describedby="f-vehicle-err" name="vehicle" type="text" required placeholder="2021 Ford F-250 Super Duty">
+              <span class="err" id="f-vehicle-err">Tell us the vehicle.</span>
             </div>
             <div class="field">
               <label for="f-insurance">Using insurance?</label>
@@ -794,6 +805,7 @@ body{padding-bottom:76px}
 
 <footer class="ftr">
   <div class="wrap">
+    <h2 class="sr">Site footer</h2>
     <div class="ftr-grid">
       <div class="ftr-brand">
         <img src="/img/fleetfix-logo.png" width="190" height="86" loading="lazy" alt="FleetFix Glass">
@@ -834,13 +846,13 @@ body{padding-bottom:76px}
   </div>
 </footer>
 
-<div class="callbar">
+<nav class="callbar" aria-label="Quick contact">
   <a class="btn btn-blue" href="tel:+17206050727" data-ff-tel>
     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2.1Z"/></svg>
     Call now
   </a>
   <a class="btn btn-primary" href="#quote">Free quote</a>
-</div>
+</nav>
 
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"AutoGlassShop","@id":"https://quote.fleetfixglass.com/#business","name":"FleetFix Glass","url":"https://quote.fleetfixglass.com/","telephone":"+17206050727","priceRange":"$$","image":"https://quote.fleetfixglass.com/img/og-card.jpg","logo":"https://quote.fleetfixglass.com/img/fleetfix-logo.png","foundingDate":"2022","address":{"@type":"PostalAddress","streetAddress":"1440 Sheridan Boulevard","addressLocality":"Denver","addressRegion":"CO","postalCode":"80214","addressCountry":"US"},"geo":{"@type":"GeoCoordinates","latitude":39.7375,"longitude":-105.0334},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"07:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday"],"opens":"08:00","closes":"17:00"}],"areaServed":[{"@type":"City","name":"Denver"},{"@type":"City","name":"Boulder"},{"@type":"City","name":"Greeley"},{"@type":"City","name":"Castle Rock"},{"@type":"City","name":"Longmont"},{"@type":"City","name":"Parker"}],"knowsLanguage":["en","es"],"paymentAccepted":["Cash","Credit Card","Debit Card","Insurance","Purchase Order","Invoice"],"currenciesAccepted":"USD","hasOfferCatalog":{"@type":"OfferCatalog","name":"Auto glass services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Windshield Replacement","url":"https://quote.fleetfixglass.com/windshield-replacement/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Windshield Chip Repair","url":"https://quote.fleetfixglass.com/windshield-repair/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Fleet Auto Glass","url":"https://quote.fleetfixglass.com/fleet-auto-glass/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Truck Windshield Replacement","url":"https://quote.fleetfixglass.com/truck-windshield-replacement/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Semi Truck Windshields","url":"https://quote.fleetfixglass.com/semi-truck-windshield-replacement/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Mobile Auto Glass","url":"https://quote.fleetfixglass.com/mobile-auto-glass/"}}]}},{"@type":"FAQPage","@id":"https://quote.fleetfixglass.com/semi-truck-windshield-replacement/#faq","mainEntity":[{"@type":"Question","name":"Can you replace just one half of a two-piece windshield?","acceptedAnswer":{"@type":"Answer","text":"Yes, and on a split-glass tractor that is usually exactly what we do — there is no reason to replace undamaged glass. It brings the cost down substantially compared with doing both sides. If the center seal or the post gasket is also perished we will flag it, because replacing the glass and leaving a failed seal behind just produces a leak."}},{"@type":"Question","name":"How quickly can you get a tractor back in service?","acceptedAnswer":{"@type":"Answer","text":"The fitting itself is usually 90 to 120 minutes with two technicians, plus the adhesive cure before the unit can be dispatched. The variable is glass availability: common Cascadia and T680 units we can often source same-day or next-day, while an older or vocational cab may take longer. Give us the VIN as early as you can and we will give you a realistic date."}},{"@type":"Question","name":"Will a cracked windshield fail a DOT inspection?","acceptedAnswer":{"@type":"Answer","text":"It can. The federal rule (49 CFR 393.60) allows limited damage inside the area swept by the wipers — broadly, a chip up to about three quarters of an inch across provided it is not close to other damage, and cracks that do not intersect one another. Beyond those limits, or where an inspector judges the damage to obstruct the driver’s view, the unit can be placed out of service. Damage outside the swept area is far less restricted. We are glass fitters rather than compliance officers, so treat this as a reason to get it looked at rather than as a legal opinion."}},{"@type":"Question","name":"Do you service owner-operators as well as fleets?","acceptedAnswer":{"@type":"Answer","text":"Absolutely. A single truck gets the same technicians and the same glass as a hundred-unit carrier. Fleet accounts exist for the billing and scheduling side, not because we prioritize big customers over small ones."}},{"@type":"Question","name":"Can you work at a truck stop or on the road?","acceptedAnswer":{"@type":"Answer","text":"Often, yes, provided the tractor is parked safely on level ground with room to work. We will not fit glass on a live shoulder — it is not safe for our technicians or for you. If you are stuck somewhere unsuitable, call and we will work out the nearest sensible place to meet."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quote.fleetfixglass.com/"},{"@type":"ListItem","position":2,"name":"Semi truck windshield replacement across Denver and the I-25 corridor","item":"https://quote.fleetfixglass.com/semi-truck-windshield-replacement/"}]}]}</script>
 
@@ -848,6 +860,11 @@ body{padding-bottom:76px}
 (function () {
   'use strict';
   var CFG = window.FF_CONFIG || {};
+  var RM = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)')
+                             : { matches: false };
+  function scrollTo(el, block) {
+    el.scrollIntoView({ block: block, behavior: RM.matches ? 'auto' : 'smooth' });
+  }
 
   document.getElementById('ff-year').textContent = new Date().getFullYear();
 
@@ -946,15 +963,24 @@ body{padding-bottom:76px}
   Object.keys(RULES).forEach(function (n) {
     var el = form.elements[n];
     if (!el) return;
-    el.addEventListener('blur', function () { mark(el, RULES[n](el.value)); });
+    el.addEventListener('blur', function () {
+      // Only judge a field the user actually engaged with, or one already
+      // flagged — tabbing past an empty field is not an error yet.
+      if (el.value.trim() !== '' || fieldOf(el).classList.contains('bad')) {
+        mark(el, RULES[n](el.value));
+      }
+    });
     el.addEventListener('input', function () {
       if (fieldOf(el).classList.contains('bad')) mark(el, RULES[n](el.value));
     });
   });
 
   function showAlert(msg) {
-    alertMsg.textContent = msg;
+    alertMsg.textContent = '';
     alertBox.classList.add('on');
+    // Insert the text after the region is rendered, so role="alert" fires on a
+    // real content change rather than on a hidden node.
+    requestAnimationFrame(function () { alertMsg.textContent = msg; });
   }
 
   form.addEventListener('submit', function (ev) {
@@ -962,7 +988,12 @@ body{padding-bottom:76px}
     alertBox.classList.remove('on');
 
     var bad = validate(true);
-    if (bad) { bad.focus(); bad.scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
+    if (bad) {
+      showAlert('Some details are missing or incomplete — please check the highlighted fields.');
+      bad.focus();
+      scrollTo(bad, 'center');
+      return;
+    }
 
     if (form.elements.company_website && form.elements.company_website.value) return;  // honeypot
 
@@ -1005,7 +1036,7 @@ body{padding-bottom:76px}
         fireAdsConversion(lead);
         wrap.style.display = 'none';
         thanks.classList.add('on');
-        thanks.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        scrollTo(thanks, 'center');
       })
       .catch(function () {
         submit.disabled = false;
