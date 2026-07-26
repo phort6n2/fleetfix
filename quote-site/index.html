@@ -93,7 +93,7 @@ body{
   overflow-x:hidden;
 }
 h1,h2,h3,h4{color:var(--ink);line-height:1.18;margin:0 0 .5em;letter-spacing:-.02em;font-weight:750}
-h1{font-size:clamp(1.85rem,1.25rem + 2.6vw,3.1rem);letter-spacing:-.03em}
+h1{font-size:clamp(1.55rem,1.1rem + 2.4vw,3.1rem);letter-spacing:-.03em}
 h2{font-size:clamp(1.5rem,1.15rem + 1.5vw,2.25rem)}
 h3{font-size:clamp(1.13rem,1.02rem + .45vw,1.35rem)}
 h4{font-size:1rem}
@@ -129,7 +129,7 @@ li{margin:0 0 .45em}
 .btn-block{display:flex;width:100%}
 
 /* ============================ header ============================ */
-.topbar{background:var(--navy-2);color:#c3d3e8;font-size:.83rem}
+.topbar{display:none;background:var(--navy-2);color:#c3d3e8;font-size:.83rem}
 .topbar .wrap{display:flex;flex-wrap:wrap;gap:4px 22px;align-items:center;justify-content:center;min-height:34px;padding-block:5px}
 /* The service-area line repeats the hero eyebrow — drop it on narrow screens
    so the bar stays one line instead of three. */
@@ -175,19 +175,23 @@ li{margin:0 0 .45em}
   content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
   background:linear-gradient(transparent 62%,rgba(0,0,0,.22));
 }
-.hero .wrap{position:relative;z-index:1;display:grid;gap:32px;padding-block:38px 44px;grid-template-columns:minmax(0,1fr)}
+.hero .wrap{position:relative;z-index:1;display:grid;gap:20px;padding-block:18px 32px;grid-template-columns:minmax(0,1fr)}
+.hero-lead{min-width:0}
+.hero-lead h1{margin-bottom:0}   /* the supporting line is a separate grid item now */
+.hero-support{min-width:0}
 .hero h1{color:#fff}
-.hero-sub{font-size:clamp(1.02rem,.97rem + .3vw,1.16rem);color:#cfe0f2;margin-bottom:22px;max-width:56ch}
+.hero-sub{font-size:clamp(.96rem,.93rem + .25vw,1.16rem);line-height:1.5;color:#cfe0f2;margin-bottom:0;max-width:56ch}
 .eyebrow{
-  display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;padding:7px 14px;
+  display:none;align-items:center;gap:8px;margin-bottom:16px;padding:7px 14px;
   border-radius:999px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);
   font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#dbe9f7;
 }
 .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:#59d98b;flex:none}
-.hero-pts{list-style:none;margin:0 0 26px;padding:0;display:grid;gap:11px}
+.hero-pts{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:11px}
 .hero-pts li{display:flex;gap:11px;align-items:flex-start;margin:0;color:#dce9f6;font-size:.98rem;line-height:1.5}
 .hero-pts svg{flex:none;margin-top:2px;color:#59d98b}
 .hero-acts{display:flex;flex-wrap:wrap;gap:12px}
+.hero-acts .btn-primary{display:none}
 .hero-acts .btn{flex:1 1 210px}
 
 /* ============================ form card ============================ */
@@ -195,10 +199,10 @@ li{margin:0 0 .45em}
   background:#fff;border-radius:var(--r-lg);box-shadow:var(--shadow-lg);
   color:var(--body);overflow:hidden;scroll-margin-top:86px;
 }
-.formcard-hd{padding:22px 24px 18px;background:linear-gradient(180deg,var(--blue-soft),#fff);border-bottom:1px solid var(--line)}
+.formcard-hd{padding:18px 20px 15px;background:linear-gradient(180deg,var(--blue-soft),#fff);border-bottom:1px solid var(--line)}
 .formcard-hd h2{font-size:1.32rem;margin-bottom:4px}
-.formcard-hd p{margin:0;font-size:.9rem;color:var(--muted)}
-.formcard-bd{padding:22px 24px 26px}
+.formcard-hd .fc-sub{display:none;margin:0;font-size:.9rem;color:var(--muted)}
+.formcard-bd{padding:18px 20px 22px}
 .fgrid{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
 .f-2{grid-column:1/-1}
 .field{display:flex;flex-direction:column;gap:6px;min-width:0}
@@ -229,6 +233,23 @@ li{margin:0 0 .45em}
 .err{display:none;font-size:.8rem;color:var(--err);font-weight:600}
 .field.bad .err{display:block}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+/* Optional detail, folded away so the card clears the fold. */
+.qc-more{border:1px solid var(--line);border-radius:10px;background:var(--bg-2)}
+.qc-more summary{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:12px 14px;min-height:46px;cursor:pointer;list-style:none;
+  font-weight:700;font-size:.9rem;color:var(--ink);
+}
+.qc-more summary::-webkit-details-marker{display:none}
+.qc-more summary::after{
+  content:"";width:9px;height:9px;margin-left:auto;flex:none;
+  border-right:2.5px solid var(--blue-2);border-bottom:2.5px solid var(--blue-2);
+  transform:rotate(45deg) translateY(-3px);transition:transform .18s;
+}
+.qc-more[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
+.qc-more summary:hover{background:#eef3f9;border-radius:9px}
+.qc-inner{padding:2px 14px 16px}
+.qc-more .hint{font-weight:400}
 .consent{grid-column:1/-1;font-size:.76rem;color:var(--muted);line-height:1.5;margin:0}
 .consent a{color:var(--muted)}
 .form-alert{
@@ -418,8 +439,23 @@ body{padding-bottom:76px}
 }
 @media (min-width:900px){
   body{padding-bottom:0}
+  .topbar{display:block}
+  .eyebrow{display:inline-flex}
+  .formcard-hd{padding:22px 24px 18px}
+  .formcard-bd{padding:22px 24px 26px}
+  .hero-acts .btn-primary{display:inline-flex}
   .callbar{display:none}
-  .hero .wrap{grid-template-columns:minmax(0,1.05fr) minmax(340px,420px);gap:44px;align-items:start;padding-block:60px 72px}
+  .hero .wrap{
+    grid-template-columns:minmax(0,1.05fr) minmax(340px,420px);
+    grid-template-areas:"lead card" "support card";
+    grid-template-rows:auto 1fr;
+    gap:20px 44px;align-items:start;padding-block:56px 68px;
+  }
+  .hero-lead{grid-area:lead}
+  .hero-support{grid-area:support}
+  .hero .formcard{grid-area:card}
+  .hero-sub{margin-bottom:20px}
+  .formcard-hd .fc-sub{display:block}
   .trust .wrap{grid-template-columns:repeat(4,minmax(0,1fr))}
   .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
   /* Once the figure sits in a ~570px column beside text, a 4:5 portrait crop
@@ -479,21 +515,14 @@ body{padding-bottom:76px}
 
 <section class="hero">
   <div class="wrap">
-    <div>
+    <div class="hero-lead">
       <span class="eyebrow"><span class="dot"></span>Mobile service · Greeley to Castle Rock</span>
       <h1>Commercial & fleet auto glass across Denver and the Front Range</h1>
-      <p class="hero-sub">Mobile windshield replacement, chip repair, heavy equipment and semi truck glass. We come to your yard, your job site or your driveway — and we bill your insurer direct.</p>
-      <ul class="hero-pts"><li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg><span>Mobile on every job — no shop visit, no extra charge inside our service area</span></li><li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg><span>Fleet programs with PO invoicing and net-30 terms on approved accounts</span></li><li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg><span>Lifetime workmanship warranty on every installation</span></li></ul>
-      <div class="hero-acts">
-        <a class="btn btn-primary btn-lg" href="#quote">Get My Free Quote</a>
-        <a class="btn btn-ghost btn-lg" href="tel:+17206050727" data-ff-tel>Call (720) 605-0727</a>
-      </div>
     </div>
-
     <div class="formcard" id="quote">
       <div class="formcard-hd">
         <h2>Get a free quote</h2>
-        <p>Tell us about the vehicle — we'll come back with a firm price.</p>
+        <p class="fc-sub">Tell us about the vehicle — we'll come back with a firm price.</p>
       </div>
       <div class="formcard-bd" data-form-wrap>
         <form id="ff-form" novalidate>
@@ -523,33 +552,37 @@ body{padding-bottom:76px}
               <input id="f-zip" aria-describedby="f-zip-err" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" required placeholder="80214">
               <span class="err" id="f-zip-err">Enter a 5-digit ZIP.</span>
             </div>
-            <div class="field f-2">
-              <label for="f-service">What do you need?</label>
-              <select id="f-service" aria-describedby="f-service-err" name="service" required><option value="">Choose one…</option><option value="Windshield replacement">Windshield replacement</option><option value="Windshield chip / crack repair">Windshield chip / crack repair</option><option value="Fleet or multi-vehicle program">Fleet or multi-vehicle program</option><option value="Truck windshield (pickup, box truck)">Truck windshield (pickup, box truck)</option><option value="Semi truck windshield">Semi truck windshield</option><option value="RV / motorhome windshield">RV / motorhome windshield</option><option value="Construction equipment glass">Construction equipment glass</option><option value="Side window / door glass">Side window / door glass</option><option value="Back glass">Back glass</option><option value="ADAS camera calibration">ADAS camera calibration</option><option value="Something else">Something else</option></select>
-              <span class="err" id="f-service-err">Please choose a service.</span>
-            </div>
-            <div class="field f-2">
-              <label for="f-vehicle">Vehicle <span class="hint">— year, make, model</span></label>
-              <input id="f-vehicle" aria-describedby="f-vehicle-err" name="vehicle" type="text" required placeholder="2021 Ford F-250 Super Duty">
-              <span class="err" id="f-vehicle-err">Tell us the vehicle.</span>
-            </div>
-            <div class="field">
-              <label for="f-insurance">Using insurance?</label>
-              <select id="f-insurance" name="insurance">
-                <option value="">Not sure yet</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No — paying out of pocket</option>
-                <option value="Fleet account">Fleet / company account</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="f-carrier">Carrier <span class="hint">— optional</span></label>
-              <input id="f-carrier" name="carrier" type="text" placeholder="e.g. State Farm">
-            </div>
-            <div class="field f-2">
-              <label for="f-vin">VIN <span class="hint">— optional, helps us source exact glass</span></label>
-              <input id="f-vin" name="vin" type="text" maxlength="17" autocapitalize="characters" placeholder="1FT7W2BT8MEC12345">
-            </div>
+            <details class="qc-more f-2">
+              <summary>Add vehicle &amp; insurance details
+                <span class="hint">optional — gets you a firmer price faster</span></summary>
+              <div class="fgrid qc-inner">
+                <div class="field f-2">
+                  <label for="f-service">What do you need?</label>
+                  <select id="f-service" name="service"><option value="">Choose one…</option><option value="Windshield replacement">Windshield replacement</option><option value="Windshield chip / crack repair">Windshield chip / crack repair</option><option value="Fleet or multi-vehicle program">Fleet or multi-vehicle program</option><option value="Truck windshield (pickup, box truck)">Truck windshield (pickup, box truck)</option><option value="Semi truck windshield">Semi truck windshield</option><option value="RV / motorhome windshield">RV / motorhome windshield</option><option value="Construction equipment glass">Construction equipment glass</option><option value="Side window / door glass">Side window / door glass</option><option value="Back glass">Back glass</option><option value="ADAS camera calibration">ADAS camera calibration</option><option value="Something else">Something else</option></select>
+                </div>
+                <div class="field f-2">
+                  <label for="f-vehicle">Vehicle <span class="hint">— year, make, model</span></label>
+                  <input id="f-vehicle" name="vehicle" type="text" placeholder="2021 Ford F-250 Super Duty">
+                </div>
+                <div class="field">
+                  <label for="f-insurance">Using insurance?</label>
+                  <select id="f-insurance" name="insurance">
+                    <option value="">Not sure yet</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No — paying out of pocket</option>
+                    <option value="Fleet account">Fleet / company account</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="f-carrier">Carrier</label>
+                  <input id="f-carrier" name="carrier" type="text" placeholder="e.g. State Farm">
+                </div>
+                <div class="field f-2">
+                  <label for="f-vin">VIN <span class="hint">— helps us source the exact glass</span></label>
+                  <input id="f-vin" name="vin" type="text" maxlength="17" autocapitalize="characters" placeholder="1FT7W2BT8MEC12345">
+                </div>
+              </div>
+            </details>
 
             <div class="hp" aria-hidden="true">
               <label for="f-company2">Company</label>
@@ -572,6 +605,15 @@ body{padding-bottom:76px}
         <h2>Request received</h2>
         <p>Thanks — we've got your details and we'll call you shortly during business hours to confirm the price and book a time.</p>
         <p><a class="btn btn-blue" href="tel:+17206050727" data-ff-tel>Call (720) 605-0727</a></p>
+      </div>
+    </div>
+
+    <div class="hero-support">
+      <p class="hero-sub">Mobile windshield replacement, chip repair, heavy equipment and semi truck glass. We come to your yard, your job site or your driveway — and we bill your insurer direct.</p>
+      <ul class="hero-pts"><li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg><span>Mobile on every job — no shop visit, no extra charge inside our service area</span></li><li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg><span>Fleet programs with PO invoicing and net-30 terms on approved accounts</span></li><li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg><span>Lifetime workmanship warranty on every installation</span></li></ul>
+      <div class="hero-acts">
+        <a class="btn btn-primary btn-lg" href="#quote">Get My Free Quote</a>
+        <a class="btn btn-ghost btn-lg" href="tel:+17206050727" data-ff-tel>Call (720) 605-0727</a>
       </div>
     </div>
   </div>
@@ -939,13 +981,14 @@ body{padding-bottom:76px}
   var thanks = document.getElementById('ff-thanks');
   var wrap   = document.querySelector('[data-form-wrap]');
 
+  /* Only the four contact fields are required. Vehicle, VIN, service,
+     insurance and carrier live behind a disclosure so the card clears the fold
+     — we collect them on the callback if they are left blank. */
   var RULES = {
-    name:    function (v) { return v.trim().length >= 2; },
-    phone:   function (v) { return !!e164(v); },
-    email:   function (v) { return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v.trim()); },
-    zip:     function (v) { return /^\d{5}$/.test(v.trim()); },
-    service: function (v) { return v.trim() !== ''; },
-    vehicle: function (v) { return v.trim().length >= 2; }
+    name:  function (v) { return v.trim().length >= 2; },
+    phone: function (v) { return !!e164(v); },
+    email: function (v) { return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v.trim()); },
+    zip:   function (v) { return /^\d{5}$/.test(v.trim()); }
   };
 
   function fieldOf(el) { return el.closest('.field'); }
