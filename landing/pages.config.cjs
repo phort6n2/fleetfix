@@ -104,7 +104,7 @@ module.exports = { SERVICES, CITIES, PAGES: [
     'Forward-facing camera recalibration handled as part of the job',
     'Lifetime workmanship warranty against leaks and seal failure',
   ],
-  servicesHeading: 'Other glass work we handle',
+  servicesHeading: 'All the glass work we handle',
   areasHeading: 'Where we replace windshields',
   ctaHeading: 'Ready to get the glass replaced?',
   body: `
@@ -151,7 +151,7 @@ module.exports = { SERVICES, CITIES, PAGES: [
     'Keeps the factory-bonded glass and its original seal in place',
     'Frequently covered with no deductible — we check your policy first',
   ],
-  servicesHeading: 'If it turns out to need replacing',
+  servicesHeading: 'The full range of glass services',
   areasHeading: 'Where we repair chips',
   ctaHeading: 'Get that chip dealt with',
   body: `
@@ -256,7 +256,7 @@ module.exports = { SERVICES, CITIES, PAGES: [
     'Upfitted trucks welcome — racks, toppers, service bodies and liftgates',
     'Serviced at your yard or job site, so the truck stays where the work is',
   ],
-  servicesHeading: 'Other work we do on commercial vehicles',
+  servicesHeading: 'Glass work across our vehicle range',
   areasHeading: 'Where we service work trucks',
   ctaHeading: 'Get your truck back to work',
   body: `
@@ -303,7 +303,7 @@ module.exports = { SERVICES, CITIES, PAGES: [
     'We come to the terminal — no deadheading a tractor to a glass shop',
     'Damage in the driver’s viewing area can put a unit out of service',
   ],
-  servicesHeading: 'Other heavy vehicle glass',
+  servicesHeading: 'Every kind of glass we replace',
   areasHeading: 'Where we service tractors',
   ctaHeading: 'Get the tractor rolling again',
   body: `
@@ -411,7 +411,7 @@ module.exports = { SERVICES, CITIES, PAGES: [
     'Fleet service days at yards across the Denver metro',
   ],
   servicesHeading: 'Glass services across Denver',
-  areasHeading: 'Beyond Denver',
+  areasHeading: 'Our Front Range service areas',
   ctaHeading: 'Get a Denver quote',
   body: `
 <h2>Auto glass across the Denver metro</h2>
@@ -464,7 +464,7 @@ module.exports = { SERVICES, CITIES, PAGES: [
     'Downtown and Hill appointments planned around loading access',
   ],
   servicesHeading: 'Glass services in Boulder',
-  areasHeading: 'Beyond Boulder',
+  areasHeading: 'Service areas along the corridor',
   ctaHeading: 'Get a Boulder quote',
   body: `
 <h2>Glass work in Boulder County</h2>
@@ -515,7 +515,7 @@ module.exports = { SERVICES, CITIES, PAGES: [
     'Hail claims billed direct to your carrier',
   ],
   servicesHeading: 'Glass services in Greeley',
-  areasHeading: 'Beyond Greeley',
+  areasHeading: 'Where we work on the Front Range',
   ctaHeading: 'Get a Greeley quote',
   body: `
 <h2>Weld County is unusually hard on glass</h2>
@@ -566,7 +566,7 @@ module.exports = { SERVICES, CITIES, PAGES: [
     'Southernmost point of our corridor — no travel charge',
   ],
   servicesHeading: 'Glass services in Castle Rock',
-  areasHeading: 'Beyond Castle Rock',
+  areasHeading: 'Our service areas, north to south',
   ctaHeading: 'Get a Castle Rock quote',
   body: `
 <h2>The Gap does most of the damage</h2>

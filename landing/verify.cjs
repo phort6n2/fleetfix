@@ -64,6 +64,26 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
         return { over, worst };
       });
       if (overflow) note(`${p} @${w}px overflows by ${overflow.over}px (widest: ${overflow.worst})`);
+
+      // No card row may leave a hole on the right. A fixed column count with a
+      // varying card count once left a 295px gap on every city page.
+      const gaps = await page.evaluate(() => {
+        const out = [];
+        document.querySelectorAll('#services .grid, #areas .grid').forEach((g) => {
+          const gb = g.getBoundingClientRect();
+          const rows = {};
+          [...g.children].forEach((k) => {
+            const b = k.getBoundingClientRect();
+            (rows[Math.round(b.top)] = rows[Math.round(b.top)] || []).push(b);
+          });
+          Object.values(rows).forEach((row) => {
+            const gap = gb.right - Math.max(...row.map((b) => b.right));
+            if (gap > 2) out.push(`${g.parentElement.parentElement.id || '?'} row gap ${Math.round(gap)}px`);
+          });
+        });
+        return out;
+      });
+      gaps.forEach((g) => note(`${p} @${w}px card ${g}`));
     }
 
     // Tap targets on the two most interaction-dense pages.

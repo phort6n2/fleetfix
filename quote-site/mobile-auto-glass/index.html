@@ -274,14 +274,24 @@ section{scroll-margin-top:86px}
 .card{
   background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px;
   min-width:0;transition:border-color .15s,box-shadow .15s,transform .15s;
+  display:flex;flex-direction:column;
 }
-a.card{text-decoration:none;color:inherit;display:block}
+/* Pins the link to the bottom so it lines up across cards whose blurbs run to
+   different numbers of lines. */
+.card .more{margin-top:auto;padding-top:12px}
+a.card{text-decoration:none;color:inherit}
 a.card:hover{border-color:var(--blue);box-shadow:var(--shadow);transform:translateY(-2px)}
 .card h3{margin-bottom:.35em;font-size:1.08rem}
 .card p{margin:0;font-size:.92rem;color:var(--muted);line-height:1.55}
 .card .ico{width:42px;height:42px;border-radius:10px;background:var(--blue-soft);color:var(--blue-2);display:grid;place-items:center;margin-bottom:14px}
-.card .more{display:inline-flex;align-items:center;gap:5px;margin-top:12px;font-weight:700;font-size:.88rem;color:var(--blue-2)}
+.card .more{display:inline-flex;align-items:center;gap:5px;font-weight:700;font-size:.88rem;color:var(--blue-2)}
 a.card:hover .more{gap:9px}
+/* The card for the page you are on: still occupies its cell so the grid never
+   leaves a hole, but reads as context rather than a dead link. */
+.card.is-current{background:var(--blue-soft);border-color:#cfe3f5;box-shadow:none}
+.card.is-current .ico{background:#fff}
+.card .more.is-here{color:var(--muted);font-weight:650}
+.card .more.is-here::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--blue);flex:none}
 .card-num{font:750 .8rem/1 var(--sans);letter-spacing:.08em;color:var(--blue);text-transform:uppercase;margin-bottom:10px;display:block}
 
 /* reviews */
@@ -624,37 +634,37 @@ body{padding-bottom:76px}
       <h2 id="svc-h">What we can do on site</h2>
       <p>Mobile service on every job, across the Front Range corridor.</p>
     </div>
-    <div class="grid grid-3">
-        <a class="card" href="/windshield-replacement/">
+    <div class="grid grid-3"><a class="card" href="/windshield-replacement/">
           <span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15 5.5 8A2 2 0 0 1 7.4 6.6h9.2A2 2 0 0 1 18.5 8L21 15"/><path d="M2 15h20v3H2z"/><path d="M12 6.6V15"/></svg></span>
           <h3>Windshield Replacement</h3>
           <p>Full replacement for cars, trucks and commercial vehicles, with camera recalibration where the vehicle needs it.</p>
           <span class="more">See details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
-        </a>
-        <a class="card" href="/windshield-repair/">
+        </a><a class="card" href="/windshield-repair/">
           <span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v6l4 2-4 2v8"/><path d="m8 7 4 2M16 7l-4 2M7 14l5-1M17 14l-5-1"/></svg></span>
           <h3>Windshield Chip Repair</h3>
           <p>Rock chips and short cracks filled on site in about half an hour, keeping your original factory seal intact.</p>
           <span class="more">See details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
-        </a>
-        <a class="card" href="/fleet-auto-glass/">
+        </a><a class="card" href="/fleet-auto-glass/">
           <span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v10H3z"/><path d="M14 10h4l3 3v4h-7"/><circle cx="6.5" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg></span>
           <h3>Fleet Auto Glass</h3>
           <p>Yard-side service days, PO invoicing, net-30 terms and per-unit service records for commercial accounts.</p>
           <span class="more">See details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
-        </a>
-        <a class="card" href="/truck-windshield-replacement/">
+        </a><a class="card" href="/truck-windshield-replacement/">
           <span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16V7h10v9"/><path d="M13 10h4.5l3.5 3.5V16h-8"/><circle cx="7" cy="18" r="1.9"/><circle cx="17" cy="18" r="1.9"/></svg></span>
           <h3>Truck Windshield Replacement</h3>
           <p>Pickups, box trucks and upfitted work trucks — including vehicles with racks, service bodies and toppers.</p>
           <span class="more">See details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
-        </a>
-        <a class="card" href="/semi-truck-windshield-replacement/">
+        </a><a class="card" href="/semi-truck-windshield-replacement/">
           <span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15V6h9v9"/><path d="M11 9h5l4 4v2h-9"/><circle cx="5.5" cy="17.5" r="1.9"/><circle cx="15" cy="17.5" r="1.9"/><circle cx="19" cy="17.5" r="1.9"/></svg></span>
           <h3>Semi Truck Windshields</h3>
           <p>Class 7 and 8 tractors — Freightliner, Peterbilt, Kenworth, Volvo, Mack and International — serviced at your terminal.</p>
           <span class="more">See details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
-        </a></div>
+        </a><div class="card is-current" aria-current="page">
+          <span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <h3>Mobile Auto Glass</h3>
+          <p>Every job is a mobile job. We bring the glass, the adhesive and the power to wherever the vehicle is parked.</p>
+          <span class="more is-here">You’re on this page</span>
+        </div></div>
   </div>
 </section>
 
@@ -681,26 +691,22 @@ body{padding-bottom:76px}
 <section class="band band-alt" id="areas" aria-labelledby="area-h">
   <div class="wrap">
     <div class="sec-hd"><h2 id="area-h">Where we come to you</h2><p>Mobile coverage along the I-25 corridor and across the Denver metro.</p></div>
-    <div class="grid grid-4">
-        <a class="card" href="/denver/">
+    <div class="grid grid-4"><a class="card" href="/denver/">
           <span class="card-num">Service area</span>
           <h3>Denver</h3>
           <p>Our home base. Metro-wide mobile service from the Sheridan corridor to DIA.</p>
           <span class="more">Local details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
-        </a>
-        <a class="card" href="/boulder/">
+        </a><a class="card" href="/boulder/">
           <span class="card-num">Service area</span>
           <h3>Boulder</h3>
           <p>Boulder County campus fleets, canyon commuters and Pearl Street delivery vans.</p>
           <span class="more">Local details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
-        </a>
-        <a class="card" href="/greeley/">
+        </a><a class="card" href="/greeley/">
           <span class="card-num">Service area</span>
           <h3>Greeley</h3>
           <p>Weld County ag equipment, oilfield pickups and US-85 freight.</p>
           <span class="more">Local details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
-        </a>
-        <a class="card" href="/castle-rock/">
+        </a><a class="card" href="/castle-rock/">
           <span class="card-num">Service area</span>
           <h3>Castle Rock</h3>
           <p>Douglas County and the I-25 Gap, where the gravel and the weather both bite.</p>

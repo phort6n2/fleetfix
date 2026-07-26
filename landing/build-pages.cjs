@@ -89,24 +89,42 @@ const SVC_ICON = {
   'mobile-auto-glass': '<path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0Z"/><circle cx="12" cy="10" r="3"/>',
 };
 
+/* Every card always renders, including the one for the page you are on — which
+   is marked as current instead of being dropped. Filtering it out made the card
+   COUNT vary per page (6 or 5 services, 4 or 3 cities) while the grid kept a
+   fixed column count, so a city page put 3 cards in a 4-column track and left a
+   295px hole on the right. Constant counts make every row fill at every
+   breakpoint, and "you are here" is useful orientation besides. */
 function serviceCards(currentSlug) {
-  return SERVICES.filter((s) => s.slug !== currentSlug).map((s) => `
-        <a class="card" href="${href(s.slug)}">
+  return SERVICES.map((s) => {
+    const inner = `
           <span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${SVC_ICON[s.slug]}</svg></span>
           <h3>${s.card}</h3>
-          <p>${s.blurb}</p>
+          <p>${s.blurb}</p>`;
+    return s.slug === currentSlug
+      ? `<div class="card is-current" aria-current="page">${inner}
+          <span class="more is-here">You’re on this page</span>
+        </div>`
+      : `<a class="card" href="${href(s.slug)}">${inner}
           <span class="more">See details ${ARROW}</span>
-        </a>`).join('');
+        </a>`;
+  }).join('');
 }
 
 function cityCards(currentSlug) {
-  return CITIES.filter((c) => c.slug !== currentSlug).map((c) => `
-        <a class="card" href="${href(c.slug)}">
+  return CITIES.map((c) => {
+    const inner = `
           <span class="card-num">Service area</span>
           <h3>${c.card}</h3>
-          <p>${c.blurb}</p>
+          <p>${c.blurb}</p>`;
+    return c.slug === currentSlug
+      ? `<div class="card is-current" aria-current="page">${inner}
+          <span class="more is-here">You’re on this page</span>
+        </div>`
+      : `<a class="card" href="${href(c.slug)}">${inner}
           <span class="more">Local details ${ARROW}</span>
-        </a>`).join('');
+        </a>`;
+  }).join('');
 }
 
 const STAR = '<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.4l6.5-.9L12 2.6Z"/></svg>';
