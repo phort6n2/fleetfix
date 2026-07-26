@@ -98,7 +98,41 @@ for Quality Score. Flip `INDEXABLE` to `true` and rebuild if that changes.
 - The conversion fires **only after the webhook confirms delivery**, and is
   deduped on `transaction_id` + `sessionStorage`.
 
-## Google reviews
+## Google reviews — currently borrowed, and attributed
+
+FleetFix has no Google Business Profile of its own yet. The reviews shown are
+**HV Auto Glass Denver's** (4.8 from 191) — the same team runs both companies.
+
+That is legitimate *only because it is attributed*. Presenting another
+business's reviews as your own is review hijacking under the FTC's Consumer
+Reviews rule (16 CFR 465) and a Google Ads misrepresentation risk. So while
+`REVIEWS.attributedTo` is set, the build:
+
+- names HV Auto Glass Denver in the section heading, in the rating line and on
+  every review card;
+- links "Read them on Google" to HV's listing, not FleetFix's;
+- **refuses to emit `aggregateRating`** in FleetFix's structured data.
+
+The attribution is carried by the *data*, not just the config —
+`fetch-reviews.cjs` stamps `attributedTo` onto `reviews.json`, and that value
+wins over `site.config.cjs`. Clearing the config field alone cannot turn a
+borrowed rating into FleetFix's own. Build assertions fail if a page shows a
+rating without naming the source, or if `aggregateRating` appears while the
+reviews are attributed.
+
+**When FleetFix gets its own profile** (free, ~10 minutes, and needed anyway for
+local search and Ads location/call assets): put FleetFix's Place ID and CID in
+`REVIEWS`, set `expectName` to match, clear `attributedTo` in both
+`site.config.cjs` and `reviews.json`, and the site switches itself back to
+first-person wording and starts emitting `aggregateRating` again. Both paths are
+covered by the build assertions.
+
+`landing/reviews.json` is currently a **seed**, not fetched: the rating and
+count come from HV's own published `aggregateRating`, cross-checked against the
+CID in their Maps link. `quotes` is deliberately empty — no review text is
+reproduced until it has been verified through the API.
+
+### How the refresh works
 
 `fetch-reviews.cjs` runs weekly in CI, writes `landing/reviews.json`, and the
 build bakes the numbers into the HTML. One API call a week; the key never

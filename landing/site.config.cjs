@@ -48,10 +48,41 @@ module.exports = {
       { days: ['Saturday'], opens: '08:00', closes: '17:00' },
     ],
     hoursHuman: 'Mon–Fri 7am–6pm, Sat 8am–5pm, Sun closed',
-    // Populate to switch on the weekly Google reviews refresh. The fetcher
-    // asserts the resolved name and address before writing anything.
-    googlePlaceId: '',
-    googleMapsCid: '',
+  },
+
+  /* --------------------------------------------------------------- reviews */
+  /**
+   * FleetFix is new and has no Google Business Profile of its own yet, so the
+   * reviews shown are HV Auto Glass Denver's — the same team runs both.
+   *
+   * `attributedTo` is what keeps that honest. While it is set, the build:
+   *   - names the source business in the section heading and on every card,
+   *   - links the rating to THAT business's Google listing,
+   *   - and refuses to put aggregateRating in FleetFix's structured data.
+   *
+   * Presenting another business's reviews as your own is review hijacking
+   * under the FTC's Consumer Reviews rule (16 CFR 465) and a Google Ads
+   * misrepresentation risk. Attribution is what makes this legitimate — do not
+   * remove it to tidy up the design.
+   *
+   * WHEN FLEETFIX HAS ITS OWN PROFILE: set placeId/mapsCid/expectName to
+   * FleetFix's, clear `attributedTo`, and the site automatically switches to
+   * first-person wording and starts emitting aggregateRating again.
+   */
+  REVIEWS: {
+    attributedTo: 'HV Auto Glass Denver',
+    attributionNote: 'FleetFix Glass is run by the team behind HV Auto Glass Denver. '
+      + 'FleetFix is newer and is still building its own review profile, so these are '
+      + 'HV Auto Glass Denver’s Google reviews.',
+    // Needed for the weekly refresh. Find it in Google's Place ID finder.
+    placeId: '',
+    // From HV's own published listing link — used for the "read them" link.
+    mapsCid: '13934619566903784372',
+    // Identity guard for fetch-reviews.cjs. This must describe the business the
+    // Place ID is expected to resolve to, so a wrong ID fails loudly.
+    expectName: /hv\s*auto\s*glass/i,
+    expectLocality: /(Denver|Lakewood|Edgewater|Wheat Ridge|Arvada)/i,
+    expectRegion: /(,\s*CO\b|\bColorado\b)/i,
   },
 
   /* ------------------------------------------------------- GHL integration */

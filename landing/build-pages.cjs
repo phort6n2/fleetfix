@@ -111,40 +111,63 @@ function cityCards(currentSlug) {
 
 const STAR = '<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.4l6.5-.9L12 2.6Z"/></svg>';
 
+const RV = SITE.REVIEWS;
+/* Non-empty when the reviews belong to a different business than this site.
+   The value in reviews.json WINS over the config: fetch-reviews.cjs stamps the
+   provenance onto the data it wrote, so clearing the config field alone can
+   never turn a borrowed 4.8 into this site's own rating. Config only supplies
+   it as a fallback for hand-seeded data. */
+const ATTRIB = ((reviews && reviews.attributedTo) || RV.attributedTo || '').trim();
+
+function mapsLink() {
+  if (reviews && reviews.mapsUri) return reviews.mapsUri;
+  if (RV.mapsCid) return `https://www.google.com/maps?cid=${encodeURIComponent(RV.mapsCid)}`;
+  return 'https://www.google.com/search?q=FleetFix+Glass+Denver';
+}
+
 function reviewsSection() {
   if (!reviews) {
     // No verified data -> no rating claims anywhere on the page.
-    const link = B.googleMapsCid
-      ? `https://www.google.com/maps?cid=${encodeURIComponent(B.googleMapsCid)}`
-      : 'https://www.google.com/search?q=FleetFix+Glass+Denver';
     return `<section class="band band-alt" aria-labelledby="rev-h">
   <div class="wrap">
     <div class="sec-hd mid"><h2 id="rev-h">What customers say</h2></div>
     <div class="noreviews">
       <p>Our customer reviews live on our Google Business Profile, where you can read them in full and see who wrote them.</p>
-      <p><a class="btn btn-outline" href="${link}" rel="noopener nofollow" target="_blank">Read our Google reviews</a></p>
+      <p><a class="btn btn-outline" href="${mapsLink()}" rel="noopener nofollow" target="_blank">Read our Google reviews</a></p>
     </div>
   </div>
 </section>`;
   }
 
+  const who = ATTRIB || B.name;
   const quotes = (reviews.quotes || []).slice(0, 3).map((q) => `
       <figure class="quote">
         <span class="stars" aria-label="${q.rating} out of 5 stars">${STAR.repeat(q.rating)}</span>
         <blockquote>${esc(q.text)}</blockquote>
-        <cite>${esc(q.author)}<span class="src">Google review${q.when ? ` · ${esc(q.when)}` : ''}</span></cite>
+        <cite>${esc(q.author)}<span class="src">Google review for ${esc(who)}${q.when ? ` · ${esc(q.when)}` : ''}</span></cite>
       </figure>`).join('');
+
+  // With no quotes yet, the rating still stands on its own — but it must never
+  // appear without saying whose rating it is.
+  const body = quotes
+    ? `<div class="grid grid-3">${quotes}</div>`
+    : `<p style="margin:0;font-size:.95rem;color:var(--muted)">Individual reviews are on
+         ${esc(who)}’s Google listing, where you can read them in full and see who wrote them.</p>`;
 
   return `<section class="band band-alt" aria-labelledby="rev-h">
   <div class="wrap">
-    <div class="sec-hd"><h2 id="rev-h">What customers say</h2></div>
+    <div class="sec-hd">
+      <h2 id="rev-h">${ATTRIB ? 'What customers say about our team' : 'What customers say'}</h2>
+      ${ATTRIB ? `<p>${esc(RV.attributionNote)}</p>` : ''}
+    </div>
     <div class="rating-hd">
       <span class="stars" aria-hidden="true">${STAR.repeat(Math.round(reviews.rating))}</span>
       <span class="score">${reviews.rating.toFixed(1)}</span>
-      <span class="count">from ${reviews.count} Google review${reviews.count === 1 ? '' : 's'}</span>
-      ${reviews.mapsUri ? `<a href="${esc(reviews.mapsUri)}" rel="noopener nofollow" target="_blank">Read them on Google</a>` : ''}
+      <span class="count">from ${reviews.count} Google review${reviews.count === 1 ? '' : 's'}
+        for ${esc(who)}</span>
+      <a href="${mapsLink()}" rel="noopener nofollow" target="_blank">Read them on Google</a>
     </div>
-    <div class="grid grid-3">${quotes}</div>
+    ${body}
   </div>
 </section>`;
 }
@@ -237,9 +260,10 @@ function localBusiness(page) {
       })),
     },
   };
-  if (B.googlePlaceId) node.identifier = B.googlePlaceId;
-  // aggregateRating is attached ONLY when live review data exists.
-  if (reviews) {
+  // aggregateRating is attached ONLY when live review data exists AND the
+  // reviews are actually this business's. Claiming another company's rating in
+  // your own LocalBusiness markup is what earns a structured-data manual action.
+  if (reviews && !ATTRIB) {
     node.aggregateRating = {
       '@type': 'AggregateRating',
       ratingValue: reviews.rating,
@@ -468,6 +492,17 @@ for (const p of PAGES) {
   if (/\{\{[A-Z0-9_]+\}\}/.test(html)) problems.push(`${p.slug || '/'}: unreplaced token`);
   if (!reviews && /\b\d\.\d\s*(★|stars?\b)/i.test(stripTags(html))) {
     problems.push(`${p.slug || '/'}: rating claim present with no review data`);
+  }
+  // Borrowed reviews must be attributed wherever they appear, and must never
+  // reach this site's structured data.
+  if (reviews && ATTRIB && !p.legal) {
+    const text = stripTags(html);
+    if (!text.includes(ATTRIB)) {
+      problems.push(`${p.slug || '/'}: shows a rating but never names ${ATTRIB}`);
+    }
+    if (/aggregateRating/.test(html)) {
+      problems.push(`${p.slug || '/'}: aggregateRating present while reviews are attributed to ${ATTRIB}`);
+    }
   }
 }
 

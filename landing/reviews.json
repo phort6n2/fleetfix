@@ -1,0 +1,11 @@
+{
+  "rating": 4.8,
+  "count": 191,
+  "mapsUri": "https://www.google.com/maps?cid=13934619566903784372",
+  "placeName": "HV Auto Glass Denver",
+  "address": "Denver, CO",
+  "attributedTo": "HV Auto Glass Denver",
+  "quotes": [],
+  "fetchedAt": "2026-07-26T00:00:00.000Z",
+  "_provenance": "SEED — not yet fetched from the Places API. Rating and count taken from HV Auto Glass Denver's own published aggregateRating on quote.hvautoglassdenver.com, cross-checked against the CID in that page's Google Maps link (13934619566903784372). Quotes are deliberately empty: no review text is reproduced here because none has been verified through the API. Set REVIEWS.placeId in site.config.cjs and add the GOOGLE_PLACES_API_KEY repo secret, and the weekly workflow will overwrite this file with live data including quotes."
+}

@@ -24,14 +24,17 @@ const SITE = require('./site.config.cjs');
 
 const OUT = path.join(__dirname, 'reviews.json');
 const KEY = process.env.GOOGLE_PLACES_API_KEY;
-const PLACE_ID = SITE.BUSINESS.googlePlaceId;
+const RV = SITE.REVIEWS;
+const PLACE_ID = RV.placeId;
 
 /* The identity guard. A wrong Place ID fails completely silently, because the
    numbers it returns look perfectly plausible — it will happily publish another
-   company's rating across every page. Assert who we actually resolved. */
-const EXPECT_NAME = /fleet\s*fix/i;
-const EXPECT_REGION = /(,\s*CO\b|\bColorado\b)/i;
-const EXPECT_LOCALITY = /(Denver|Lakewood|Edgewater|Wheat Ridge)/i;
+   company's rating across every page. Assert who we actually resolved.
+   These expectations come from site.config.cjs, so they stay correct when the
+   review source changes (currently HV Auto Glass Denver, later FleetFix). */
+const EXPECT_NAME = RV.expectName;
+const EXPECT_REGION = RV.expectRegion;
+const EXPECT_LOCALITY = RV.expectLocality;
 
 function bail(msg) {
   console.error(`fetch-reviews: ${msg}`);
@@ -41,7 +44,7 @@ function bail(msg) {
 
 async function main() {
   if (!KEY) return bail('GOOGLE_PLACES_API_KEY is not set.');
-  if (!PLACE_ID) return bail('BUSINESS.googlePlaceId is empty in site.config.cjs.');
+  if (!PLACE_ID) return bail('REVIEWS.placeId is empty in site.config.cjs.');
 
   const fields = [
     'id', 'displayName', 'formattedAddress', 'rating',
@@ -69,8 +72,9 @@ async function main() {
 
   /* ---- Gotcha #1: verify the listing before trusting a single number ---- */
   if (!EXPECT_NAME.test(name)) {
-    return bail(`resolved listing is "${name}" — that is not FleetFix Glass. ` +
-                'Check the Place ID against the business\'s own Google Maps link.');
+    return bail(`resolved listing is "${name}", which does not match ` +
+                `REVIEWS.expectName (${EXPECT_NAME}). Check the Place ID against ` +
+                'the business\'s own Google Maps link before trusting any number.');
   }
   if (!EXPECT_REGION.test(address)) {
     return bail(`resolved address "${address}" is not in Colorado.`);
@@ -78,11 +82,9 @@ async function main() {
   if (!EXPECT_LOCALITY.test(address)) {
     return bail(`resolved address "${address}" is not in the Denver area.`);
   }
-  if (!address.includes(SITE.BUSINESS.street.split(' ')[0])) {
-    // Street number mismatch is a warning, not a hard stop — Google sometimes
-    // formats the address differently — but it must be visible in the log.
-    console.warn(`fetch-reviews: WARNING street number differs from ` +
-                 `site.config.cjs ("${SITE.BUSINESS.street}"). Verify manually.`);
+  if (RV.attributedTo) {
+    console.log(`fetch-reviews: these are ${RV.attributedTo}'s reviews and will be ` +
+                'published with visible attribution; aggregateRating stays off this site.');
   }
 
   /* ---- sanity-check the values before overwriting anything ---- */
@@ -107,6 +109,7 @@ async function main() {
     mapsUri: data.googleMapsUri || '',
     placeName: name,
     address,
+    attributedTo: RV.attributedTo || '',
     fetchedAt: new Date().toISOString(),
     quotes,
   };
