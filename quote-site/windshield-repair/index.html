@@ -252,8 +252,11 @@ section{scroll-margin-top:86px}
 .trust-i span{font-size:.87rem;color:var(--muted);line-height:1.5}
 
 /* prose */
-.prose{max-width:72ch;min-width:0}
-.prose.legal{margin-inline:auto}
+/* Centred, not left-aligned. A measure this narrow sitting flush-left inside
+   the full-width wrap put a ~479px void on the right, between two bands that
+   both run edge to edge — the page stepped in and back out again. Centring
+   splits it evenly so the narrow measure reads as deliberate. */
+.prose{max-width:72ch;min-width:0;margin-inline:auto}
 .prose .lead{font-size:1.06rem;color:var(--ink)}
 .prose code{font-size:.88em;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;word-break:break-word}
 .prose h2{margin-top:1.6em}
@@ -320,11 +323,14 @@ a.card:hover .more{gap:9px}
 
 /* work photo */
 .shot{border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line);background:var(--bg-2)}
-.shot img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.shot img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 62%}
 .shot figcaption{padding:12px 16px;font-size:.82rem;color:var(--muted);background:#fff;border-top:1px solid var(--line)}
 
 /* faq */
-.faq{max-width:78ch}
+.faq{max-width:78ch;margin-inline:auto}   /* same reasoning as .prose above */
+/* The heading has to track the accordion it titles, or it sits flush left
+   while the questions start 231px in. */
+.sec-hd.faq-hd{max-width:78ch;margin-inline:auto}
 .faq details{background:#fff;border:1px solid var(--line);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
 .faq details[open]{border-color:#c5d7ea;box-shadow:var(--shadow)}
 .faq summary{
@@ -405,6 +411,10 @@ body{padding-bottom:76px}
   .hero .wrap{grid-template-columns:minmax(0,1.05fr) minmax(340px,420px);gap:44px;align-items:start;padding-block:60px 72px}
   .trust .wrap{grid-template-columns:repeat(4,minmax(0,1fr))}
   .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  /* Once the figure sits in a ~570px column beside text, a 4:5 portrait crop
+     runs 310px taller than the prose next to it. 5:4 brings the two columns
+     to within ~10px; the offset keeps the technician in frame. */
+  .shot img{aspect-ratio:5/4}
   .ftr-grid{grid-template-columns:1.5fr 1fr 1fr 1.4fr;gap:32px}
   .hdr-quote{display:inline-flex}
 }
@@ -744,7 +754,7 @@ body{padding-bottom:76px}
 
 <section class="band band-alt" aria-labelledby="faq-h">
   <div class="wrap">
-    <div class="sec-hd"><h2 id="faq-h">Frequently asked questions</h2></div>
+    <div class="sec-hd faq-hd"><h2 id="faq-h">Frequently asked questions</h2></div>
     <div class="faq">
       <details>
         <summary>How long before I can drive?</summary>
