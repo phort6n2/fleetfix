@@ -201,7 +201,10 @@ function localBusiness(page) {
     '@type': 'AutoGlassShop',
     '@id': `${SITE.ORIGIN}/#business`,
     name: B.name,
-    url: abs(page.slug),
+    // Pinned to the site root, NOT the current page. The @id is constant across
+    // every page, so a per-page url would assert one entity with 13 conflicting
+    // url values. The business entity is the site, not the page describing it.
+    url: abs(''),
     telephone: B.phoneE164,
     priceRange: B.priceRange,
     image: `${SITE.ORIGIN}${BASE}/img/og-card.jpg`,
@@ -260,11 +263,17 @@ function jsonLd(page) {
       })),
     });
   }
-  graph.push({
-    '@type': 'BreadcrumbList',
-    itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: abs('') }]
-      .concat(page.slug ? [{ '@type': 'ListItem', position: 2, name: stripTags(page.h1 || page.nav || page.slug), item: abs(page.slug) }] : []),
-  });
+  // Only on sub-pages: a single-item breadcrumb on the home page is inert —
+  // Google will not render a trail that goes nowhere.
+  if (page.slug) {
+    graph.push({
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: abs('') },
+        { '@type': 'ListItem', position: 2, name: stripTags(page.h1 || page.nav || page.slug), item: abs(page.slug) },
+      ],
+    });
+  }
   return `<script type="application/ld+json">${
     JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })
       .replace(/</g, '\\u003c')
@@ -441,6 +450,16 @@ for (const p of PAGES) {
     if (seen[k].has(v)) problems.push(`duplicate ${k}: "/${p.slug}" and "/${seen[k].get(v)}"`);
     else seen[k].set(v, p.slug);
   });
+
+  // Keep these inside the width Google will actually render, so this stays
+  // correct if INDEXABLE is ever flipped on. Measure the DECODED text: "&amp;"
+  // is five characters of markup but a single character to a search engine.
+  const decode = (s) => String(s)
+    .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&');
+  if (d && decode(d).length > 158) problems.push(`${p.slug || '/'}: meta description ${decode(d).length} chars (max 158)`);
+  if (t && decode(t).length > 62) problems.push(`${p.slug || '/'}: title ${decode(t).length} chars (max 62)`);
 
   if (!/rel="canonical"/.test(html)) problems.push(`${p.slug || '/'}: no canonical`);
   if (!/application\/ld\+json/.test(html)) problems.push(`${p.slug || '/'}: no JSON-LD`);
