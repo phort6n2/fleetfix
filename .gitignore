@@ -3,3 +3,8 @@ node_modules/
 *.log
 .vercel
 .verify-shots/
+
+# Scratch harnesses written by QA subagents while auditing the built site.
+# Throwaway: the site build never reads them.
+scratch-a11y/
+scratch-*/
