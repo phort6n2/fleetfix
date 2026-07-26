@@ -17,7 +17,12 @@ const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
 
+const SITE = require('./site.config.cjs');
 const BASE = process.env.BASE_URL || 'http://localhost:4173';
+// GHL's number pool is optional and currently disabled in favour of Google's
+// own call tracking. Derive the expectation from config so switching either way
+// does not leave a stale hardcoded count failing the suite.
+const GHL_POOL_ON = !!(SITE.GHL.locationId && SITE.GHL.numberPoolId);
 const EXEC = '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const SHOTS = path.join(__dirname, '..', '.verify-shots');
 
@@ -275,8 +280,8 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
     const dl = await page.evaluate(() => (window.dataLayer || []).length);
     if (dl !== 0) note(`dataLayer populated with empty config (${dl} entries)`);
     if (external !== 0) note(`${external} non-DNI external request(s) with empty config`);
-    // And confirm call tracking is actually wired, since it is easy to lose.
-    if (dni !== 2) note(`expected 2 GHL number-pool requests, saw ${dni}`);
+    const expectDni = GHL_POOL_ON ? 2 : 0;
+    if (dni !== expectDni) note(`expected ${expectDni} GHL number-pool request(s), saw ${dni}`);
 
     // The form must refuse to silently drop a lead when no webhook is set.
     await page.fill('#f-name', 'Jane Tester');
@@ -318,6 +323,43 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
     });
 
     await page.goto(BASE + '/?gclid=SHIPPED1', { waitUntil: 'load' });
+
+    /* ---- Google call tracking (dynamic number insertion) ---- */
+    const CALL_SEND_TO = 'AW-18345617633/vGb3CN2g8NYcEOHR76tE';
+    const CALL_NUMBER = '(720) 605-0727';
+    const phoneCfg = await page.evaluate(() => (window.dataLayer || [])
+      .map((a) => Array.from(a))
+      .find((a) => a[0] === 'config' && a[2] && a[2].phone_conversion_number));
+    if (!phoneCfg) note('no phone_conversion config — call tracking is not wired');
+    else {
+      if (phoneCfg[1] !== CALL_SEND_TO) note(`call send_to is "${phoneCfg[1]}"`);
+      if (phoneCfg[2].phone_conversion_number !== CALL_NUMBER) {
+        note(`phone_conversion_number is "${phoneCfg[2].phone_conversion_number}"`);
+      }
+      if (phoneCfg[2].phone_conversion_css_class !== 'ads-phone') {
+        note('phone_conversion_css_class missing — swap would not be scoped, and the call asset could be rewritten');
+      }
+    }
+    const swap = await page.evaluate((num) => {
+      const inScope = [...document.querySelectorAll('.ads-phone')];
+      const asset = document.querySelector('a[href="tel:+17204774896"]');
+      return {
+        total: inScope.length,
+        // Google matches on the number as TEXT. An in-scope element without it
+        // may not be rewritten, silently losing that call's attribution.
+        withoutNumber: inScope.filter((e) => !e.textContent.includes(num))
+          .map((e) => (e.textContent || '').trim().slice(0, 30)),
+        assetInScope: !!asset && asset.classList.contains('ads-phone'),
+      };
+    }, CALL_NUMBER);
+    if (swap.total === 0) note('no elements carry ads-phone — nothing would be swapped');
+    if (swap.assetInScope) note('call asset carries ads-phone and would be rewritten by Google');
+    if (swap.withoutNumber.length) {
+      note(`ads-phone element(s) without the number as text: ${swap.withoutNumber.join(' | ')}`);
+    }
+    if (!fails.length) {
+      console.log(`  call tracking: ${swap.total} numbers in swap scope, call asset excluded`);
+    }
     const cfg = await page.evaluate(() => (window.dataLayer || [])
       .map((a) => Array.from(a))
       .find((a) => a[0] === 'config' && String(a[1]).startsWith('AW-')));

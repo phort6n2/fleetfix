@@ -530,14 +530,17 @@ for (const p of PAGES) {
     const anchor = new RegExp(`<a[^>]*href="tel:${esc164}"[^>]*>`);
     const tag = (html.match(anchor) || [])[0];
     if (!tag) problems.push(`${p.slug || '/'}: call asset number missing from the page`);
+    else if (/class="[^"]*\bads-phone\b/.test(tag)) {
+      // Google's DNI is opt-in: it only rewrites numbers inside elements
+      // carrying phone_conversion_css_class. The call asset must never carry
+      // it, or Google rewrites the very number it verifies the page for and
+      // the call asset silently stops serving.
+      problems.push(`${p.slug || '/'}: call asset carries ads-phone and would be swapped`);
+    }
+    // The legacy GHL marker stays as belt-and-braces in case the number pool is
+    // ever switched back on; it is inert while Google's DNI is the active one.
     else if (!/class="[^"]*\bnoswap\b/.test(tag)) {
-      // GHL's number_pool.js keys off the literal class token "noswap", twice:
-      //   text nodes   -> classList.contains("noswap")   (exact token)
-      //   anchor hrefs -> className.includes("noswap")   (substring)
-      // "ghl-no-swap" satisfies NEITHER, and data-no-swap is never read. Get
-      // this wrong and DNI rewrites the call asset, Google's verification of
-      // the number fails, and the call asset silently stops serving.
-      problems.push(`${p.slug || '/'}: call asset lacks the "noswap" class GHL actually checks`);
+      problems.push(`${p.slug || '/'}: call asset lost its noswap class`);
     }
     // It must also be the ONLY place that number appears, so DNI has nothing
     // else to catch and visitors are not given two different numbers to call.

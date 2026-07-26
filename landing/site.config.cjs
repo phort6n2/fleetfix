@@ -89,11 +89,24 @@ module.exports = {
   },
 
   /* ------------------------------------------------------- GHL integration */
-  // Number pool (dynamic number insertion). Both must be set for the call
-  // tracking scripts to be injected at all.
+  /**
+   * GHL's number pool is DISABLED. Call tracking is handled by Google's own
+   * "Calls from a website" conversion action instead — see the FF_CONFIG block
+   * in fleetfix.html. Google's swap is free, attributes calls directly to the
+   * campaign and keyword, and only applies to visitors who arrived from an ad,
+   * so organic and direct visitors keep seeing the real number.
+   *
+   * DO NOT re-enable this while Google's call conversion is live. The two fight
+   * over the same text: whichever runs first rewrites the number, the second
+   * then cannot find what it was told to look for and silently does nothing —
+   * and any call that IS tracked risks being counted twice in Ads, once by
+   * Google's call conversion and once by GHL's offline import.
+   *
+   * If you ever switch back, clear GOOGLE_ADS_CALL_LABEL first.
+   */
   GHL: {
-    locationId: 'L9OIGvEMdvEEkF4JPdCx',
-    numberPoolId: 'IcUnXUQLuTarA0KZrAMo',
+    locationId: '',
+    numberPoolId: '',
   },
 
   /* ---------------------------------------------------- form service picker */

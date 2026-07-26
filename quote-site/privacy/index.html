@@ -20,6 +20,15 @@
     GA4_ID:           "",              // optional
     LEAD_VALUE:       0,
     CURRENCY:         "USD",
+
+    // "Calls from a website" conversion action. Google swaps the number below
+    // for a forwarding number, but ONLY for visitors who arrived from an ad
+    // click, and ONLY inside elements carrying PHONE_CONVERSION_CSS_CLASS.
+    // That scoping is opt-in, which is what keeps the Google Ads call asset in
+    // the footer safe: it simply does not carry the class.
+    GOOGLE_ADS_CALL_LABEL:      "vGb3CN2g8NYcEOHR76tE",
+    PHONE_CONVERSION_NUMBER:    "(720) 605-0727",
+    PHONE_CONVERSION_CSS_CLASS: "ads-phone",
     // HighLevel Inbound Webhook. Leads are surfaced as an error rather than
     // silently dropped if this is ever emptied.
     GHL_WEBHOOK_URL:  "https://services.leadconnectorhq.com/hooks/L9OIGvEMdvEEkF4JPdCx/webhook-trigger/bIgELeLLaXJthi7sZwGk"
@@ -40,6 +49,16 @@
       gtag('config', c.GOOGLE_ADS_ID, { allow_enhanced_conversions: true });
     }
     if (c.GA4_ID) { gtag('config', c.GA4_ID); }
+
+    // Dynamic number insertion for call conversions. Guarded like everything
+    // else, so an empty label leaves every number on the page untouched.
+    if (c.GOOGLE_ADS_ID && c.GOOGLE_ADS_CALL_LABEL && c.PHONE_CONVERSION_NUMBER) {
+      var phoneCfg = { phone_conversion_number: c.PHONE_CONVERSION_NUMBER };
+      if (c.PHONE_CONVERSION_CSS_CLASS) {
+        phoneCfg.phone_conversion_css_class = c.PHONE_CONVERSION_CSS_CLASS;
+      }
+      gtag('config', c.GOOGLE_ADS_ID + '/' + c.GOOGLE_ADS_CALL_LABEL, phoneCfg);
+    }
   })();
 </script>
 
@@ -423,7 +442,8 @@ a.card:hover .more{gap:9px}
   background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);
   box-shadow:0 -4px 20px rgba(16,32,56,.1);
 }
-.callbar .btn{flex:1;min-height:50px;font-size:.98rem;padding-inline:12px}
+.callbar .btn{flex:1;min-height:50px;font-size:.98rem;padding-inline:10px}
+.callbar .cb-num{font-size:.92rem;letter-spacing:-.02em;white-space:nowrap}
 body{padding-bottom:76px}
 
 /* ======================================================================
@@ -511,7 +531,7 @@ body{padding-bottom:76px}
     <nav class="nav" aria-label="Primary"><a href="/">Home</a><a href="/windshield-replacement/">Windshields</a><a href="/windshield-repair/">Chip Repair</a><a href="/fleet-auto-glass/">Fleet Glass</a><a href="/truck-windshield-replacement/">Trucks</a><a href="/denver/">Denver</a></nav>
     <div class="hdr-cta">
       <a class="btn btn-primary hdr-quote" href="/#quote">Free Quote</a>
-      <a class="hdr-tel" href="tel:+17206050727" aria-label="Call FleetFix Glass at (720) 605-0727" data-ff-tel>
+      <a class="hdr-tel ads-phone" href="tel:+17206050727" aria-label="Call FleetFix Glass at (720) 605-0727" data-ff-tel>
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2.1Z"/></svg>
         <span class="lbl">(720) 605-0727</span>
       </a>
@@ -556,8 +576,10 @@ body{padding-bottom:76px}
 <p>The site loads Google's tag (gtag.js) from googletagmanager.com. Google may set cookies through that tag. See <a href="https://policies.google.com/privacy" rel="noopener nofollow" target="_blank">Google's Privacy Policy</a> and <a href="https://policies.google.com/technologies/partner-sites" rel="noopener nofollow" target="_blank">how Google uses data from sites that use its services</a>.</p>
 
 <h2>Call tracking</h2>
-<p>We may use a dynamic number insertion service, which shows different visitors different telephone numbers so we can tell which advertising generated a call. If that service is active, the number displayed on the page may be a tracking number that forwards to our main line. Calls to tracking numbers may be recorded or monitored for quality and training; where a call is recorded you will be told at the start of the call.</p>
-<p>The number published as our Google Ads call asset is a fixed number and is never swapped.</p>
+<p>We use Google's call conversion tracking. <b>If you arrived here by clicking one of our Google ads</b>, the Google tag replaces our main telephone number on this page with a Google forwarding number, so that Google can tell us which advertising generated a call. Calls to that forwarding number connect to our normal line, and Google reports the call and its duration back to us as a conversion.</p>
+<p>If you arrived any other way, by search, a link, or by typing the address, you see our real number and no substitution takes place.</p>
+<p>The number published as our Google Ads call asset is a separate, fixed number and is never substituted.</p>
+<p>We do not record calls through this system. Google's handling of call data is described in its own <a href="https://policies.google.com/privacy" rel="noopener nofollow" target="_blank">Privacy Policy</a>.</p>
 
 <h2>What we do with your information</h2>
 <p>We use it to prepare a quote, contact you about your request, schedule and carry out the work, source the correct glass, submit and manage an insurance claim if you ask us to, keep records of work performed, honor our workmanship warranty, and measure which advertising is working. We do not use it for anything else.</p>
@@ -624,7 +646,7 @@ body{padding-bottom:76px}
         <ul class="ftr-nap">
           <li>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2.1Z"/></svg>
-            <a href="tel:+17206050727" data-ff-tel>(720) 605-0727</a>
+            <a class="ads-phone" href="tel:+17206050727" data-ff-tel>(720) 605-0727</a>
           </li>
           <li>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h5l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v5a15 15 0 0 1-16-16Z"/></svg>
@@ -650,9 +672,9 @@ body{padding-bottom:76px}
 </footer>
 
 <nav class="callbar" aria-label="Quick contact">
-  <a class="btn btn-blue" href="tel:+17206050727" data-ff-tel>
+  <a class="btn btn-blue ads-phone" href="tel:+17206050727" data-ff-tel>
     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2.1Z"/></svg>
-    Call now
+    <span class="cb-num">(720) 605-0727</span>
   </a>
   <a class="btn btn-primary" href="/#quote">Free quote</a>
 </nav>
@@ -854,7 +876,6 @@ body{padding-bottom:76px}
 
 <!-- GHL call tracking (number pool + session) loads last, so every number is in
      the DOM before the swap. Injected by the build only when both IDs are set. -->
-<script src="https://backend.leadconnectorhq.com/appengine/loc/L9OIGvEMdvEEkF4JPdCx/pool/IcUnXUQLuTarA0KZrAMo/number_pool.js"></script>
-<script src="https://backend.leadconnectorhq.com/appengine/js/user_session.js"></script>
+<!-- GHL number pool not configured: set GHL.locationId and GHL.numberPoolId in landing/site.config.cjs -->
 </body>
 </html>
