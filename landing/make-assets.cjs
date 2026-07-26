@@ -56,34 +56,48 @@ function buildIco(frames) {
   fs.mkdirSync(OUT, { recursive: true });
 
   // ---- Header logo: trim the transparent margin so it optically centres ----
-  await sharp(path.join(SRC, 'FF-Logo.png'))
-    .trim()
-    .resize({ width: 640, withoutEnlargement: true })
-    .png({ compressionLevel: 9, palette: true })
+  // Displayed at 52px tall in the header and 84px in the footer, so 260px
+  // covers 3x DPR on the larger of the two. Anything bigger is dead weight.
+  const logoTrimmed = await sharp(path.join(SRC, 'FF-Logo.png')).trim().png().toBuffer();
+  await sharp(logoTrimmed)
+    .resize({ height: 260, withoutEnlargement: true })
+    .png({ compressionLevel: 9, palette: true, quality: 90 })
     .toFile(path.join(OUT, 'fleetfix-logo.png'));
 
   // ---- Hero photo, responsive widths, WebP + JPEG fallback ----
-  const hero = path.join(SRC, 'fleet-yard.png');
-  for (const w of [560, 840, 1120]) {
+  // Rendered at ~570 CSS px max, so 1120 covers 2x DPR and nothing wider is
+  // worth the bytes. Both formats are referenced from a <picture> in the
+  // template — generating a variant nothing points at is just dead weight.
+  // The source is 768px wide, so anything above that would be an upscale —
+  // more bytes for a blurrier image. Cap the largest variant at native width.
+  const hero = path.join(SRC, 'fleet-yard.jpg');
+  const heroMeta = await sharp(hero).metadata();
+  const widths = [384, 576, 768].filter((w) => w <= heroMeta.width);
+  for (const w of widths) {
     await sharp(hero).resize({ width: w })
-      .webp({ quality: 76 }).toFile(path.join(OUT, `hero-${w}.webp`));
+      .webp({ quality: 70 }).toFile(path.join(OUT, `hero-${w}.webp`));
     await sharp(hero).resize({ width: w })
-      .jpeg({ quality: 80, progressive: true, mozjpeg: true })
+      .jpeg({ quality: 74, progressive: true, mozjpeg: true, chromaSubsampling: '4:2:0' })
       .toFile(path.join(OUT, `hero-${w}.jpg`));
   }
 
   // ---- Open Graph card: shield centred on brand navy ----
-  const shield = await sharp(path.join(SRC, 'Collision.png'))
-    .trim().resize({ width: 460, height: 460, fit: 'contain',
+  // Derived from the same trimmed logo — the separate square export was the
+  // identical mark, so keeping it as a second source was pure duplication.
+  const shield = await sharp(logoTrimmed)
+    .resize({ width: 460, height: 460, fit: 'contain',
       background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .png().toBuffer();
+  // JPEG, not PNG — it is a photo-ish gradient shield on a flat field, and the
+  // PNG of the same card was ~5x the size for no visible gain.
   await sharp({
     create: { width: 1200, height: 630, channels: 4,
       background: { r: 18, g: 41, b: 75, alpha: 1 } },
   })
     .composite([{ input: shield, gravity: 'centre' }])
-    .png({ compressionLevel: 9 })
-    .toFile(path.join(OUT, 'og-card.png'));
+    .flatten({ background: { r: 18, g: 41, b: 75 } })
+    .jpeg({ quality: 84, progressive: true, mozjpeg: true })
+    .toFile(path.join(OUT, 'og-card.jpg'));
 
   // ---- PWA + Apple icons ----
   for (const s of [192, 512]) {

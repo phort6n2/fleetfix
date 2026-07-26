@@ -619,8 +619,14 @@ body{padding-bottom:76px}
   <div class="wrap">
     <div class="grid" style="align-items:center">
       <figure class="shot" style="margin:0">
-        <img src="/PREFIX/img/hero-840.jpg" width="840" height="1050" loading="lazy" decoding="async"
-             alt="FleetFix technicians replacing glass on a box truck and a passenger car at a Front Range fleet yard">
+        <picture>
+          <source type="image/webp" sizes="(min-width:900px) 570px, 100vw"
+                  srcset="/PREFIX/img/hero-384.webp 384w, /PREFIX/img/hero-576.webp 576w, /PREFIX/img/hero-768.webp 768w">
+          <img src="/PREFIX/img/hero-576.jpg" sizes="(min-width:900px) 570px, 100vw"
+               srcset="/PREFIX/img/hero-384.jpg 384w, /PREFIX/img/hero-576.jpg 576w, /PREFIX/img/hero-768.jpg 768w"
+               width="576" height="1032" loading="lazy" decoding="async"
+               alt="FleetFix technicians replacing glass on a box truck and a passenger car at a Front Range fleet yard">
+        </picture>
         <figcaption>Fleet service day — multiple units handled on site in a single visit.</figcaption>
       </figure>
       <div class="prose">

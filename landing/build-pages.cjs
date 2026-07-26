@@ -204,7 +204,7 @@ function localBusiness(page) {
     url: abs(page.slug),
     telephone: B.phoneE164,
     priceRange: B.priceRange,
-    image: `${SITE.ORIGIN}${BASE}/img/og-card.png`,
+    image: `${SITE.ORIGIN}${BASE}/img/og-card.jpg`,
     logo: `${SITE.ORIGIN}${BASE}/img/fleetfix-logo.png`,
     foundingDate: B.established,
     address: {
@@ -275,11 +275,13 @@ function jsonLd(page) {
 const template = fs.readFileSync(path.join(__dirname, 'fleetfix.html'), 'utf8');
 
 function applyBase(s) {
-  // Rewrite EVERY attribute that carries the asset prefix, not just href.
-  // Both the "/PREFIX/..." and bare "/PREFIX" forms must be handled.
+  // /PREFIX is a sentinel that appears nowhere else, so replace it wherever it
+  // occurs rather than anchoring to `="`. Anchoring misses the 2nd and 3rd URL
+  // of a srcset (they follow ", ", not `="`) and any url() inside inline CSS.
+  // Handle the "/PREFIX/..." form first, then any bare "/PREFIX".
   return s
-    .replace(/="\/PREFIX\//g, `="${BASE}/`)
-    .replace(/="\/PREFIX(?=["/])/g, `="${BASE || '/'}`);
+    .replace(/\/PREFIX\//g, `${BASE}/`)
+    .replace(/\/PREFIX\b/g, BASE || '/');
 }
 
 function render(page) {
@@ -302,7 +304,7 @@ function render(page) {
     TITLE: esc(page.title),
     DESC: esc(page.desc),
     OG_TITLE: esc(page.ogTitle || page.title),
-    OG_IMAGE: `${SITE.ORIGIN}${BASE}/img/og-card.png`,
+    OG_IMAGE: `${SITE.ORIGIN}${BASE}/img/og-card.jpg`,
     CANONICAL: abs(page.slug),
     ROBOTS: SITE.INDEXABLE
       ? 'index,follow,max-image-preview:large'
@@ -388,7 +390,7 @@ write('sitemap.xml',
 write('robots.txt',
   `User-agent: *\nAllow: /\n\nSitemap: ${SITE.ORIGIN}${BASE}/sitemap.xml\n`);
 
-write('vercel.json', JSON.stringify({
+const vercelCommon = {
   trailingSlash: SITE.TRAILING_SLASH,
   headers: [
     { source: '/img/(.*)', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
@@ -400,7 +402,27 @@ write('vercel.json', JSON.stringify({
       ],
     },
   ],
-}, null, 2));
+};
+
+// For the documented setup: Vercel Root Directory = quote-site, so this is the
+// config it reads.
+write('vercel.json', JSON.stringify(vercelCommon, null, 2));
+
+// And a repo-root config, so a project linked to the repo with Root Directory
+// left at the default still builds and serves the generated folder. Emitted
+// from the same object as the one above so the two cannot drift apart.
+// The page build has zero npm dependencies (sharp is only used by
+// make-assets.cjs, whose output is committed), so installing nothing is both
+// correct and fast.
+fs.writeFileSync(
+  path.join(__dirname, '..', 'vercel.json'),
+  JSON.stringify({
+    buildCommand: 'node landing/build-pages.cjs',
+    installCommand: 'echo "no dependencies required for the page build"',
+    outputDirectory: 'quote-site',
+    ...vercelCommon,
+  }, null, 2) + '\n'
+);
 
 /* ================================================================ asserts */
 const problems = [];
