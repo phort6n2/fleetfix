@@ -364,11 +364,23 @@ a.card:hover .more{gap:9px}
 .stars{display:inline-flex;gap:2px;color:var(--amber)}
 .rating-hd .score{font-size:1.5rem;font-weight:800;color:var(--ink);line-height:1}
 .rating-hd .count{font-size:.92rem;color:var(--muted)}
-.quote{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px;min-width:0}
+/* Cards stretch to the tallest quote, so a short one used to leave a block of
+   empty white below its attribution. Pinning the cite to the bottom lines the
+   attributions up across the row and reads as deliberate. */
+.quote{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px;min-width:0;
+  display:flex;flex-direction:column}
+.quote cite{margin-top:auto}
 .quote .stars{margin-bottom:12px}
 .quote blockquote{margin:0 0 14px;font-size:.96rem;line-height:1.6;color:var(--body)}
 .quote cite{font-style:normal;font-weight:700;font-size:.87rem;color:var(--ink)}
 .quote .src{font-size:.79rem;color:var(--muted);display:block;margin-top:2px}
+/* The quote count comes from Google, not from us: the fetch filter can leave
+   1, 2 or 3. The .q-N class the build stamps on keeps the column count equal
+   to the card count, so a short row is centred instead of stranding empty
+   columns as dead space on the right. */
+.quotes{margin-inline:auto}
+.q-1{max-width:600px}
+.q-2{max-width:860px}
 .noreviews{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px;text-align:center;max-width:58ch;margin-inline:auto}
 .noreviews p{margin-bottom:16px}
 
@@ -463,6 +475,10 @@ body{padding-bottom:76px}
 @media (min-width:768px){
   .band{padding-block:72px}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  /* 1 or 3 quotes stay stacked here — two columns would leave a ragged
+     half-empty second row. 3 goes wide again at 900. Must follow .grid: same
+     specificity, so source order decides. */
+  .q-1,.q-3{grid-template-columns:minmax(0,1fr)}
   .hero .wrap{padding-block:52px 60px}
   .ftr-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:36px}
   .hdr-tel .lbl{display:inline}
@@ -488,7 +504,7 @@ body{padding-bottom:76px}
   .hero-sub{margin-bottom:20px}
   .formcard-hd .fc-sub{display:block}
   .trust .wrap{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .grid-3,.q-3{grid-template-columns:repeat(3,minmax(0,1fr))}
   /* Once the figure sits in a ~570px column beside text, a 4:5 portrait crop
      runs 310px taller than the prose next to it. 5:4 brings the two columns
      to within ~10px; the offset keeps the technician in frame. */

@@ -101,6 +101,30 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
             if (gap > 2) out.push(`${g.parentElement.parentElement.id || '?'} row gap ${Math.round(gap)}px`);
           });
         });
+        // The reviews grid is the same bug with a different cause: how many
+        // quotes survive the fetch filter is Google's call, not ours, so the
+        // column count has to track the card count. Two quotes in a fixed
+        // three-column grid left a 433px void at 1440.
+        //
+        // Measure against the WRAP, not the grid box. A grid that is correctly
+        // sized but left-aligned inside its wrapper looks exactly like the bug
+        // on screen, and comparing a row to its own grid box cannot see it.
+        const q = document.querySelector('.quotes');
+        if (q) {
+          const wb = q.closest('.wrap').getBoundingClientRect();
+          const rows = {};
+          [...q.children].forEach((k) => {
+            const b = k.getBoundingClientRect();
+            (rows[Math.round(b.top)] = rows[Math.round(b.top)] || []).push(b);
+          });
+          Object.values(rows).forEach((row) => {
+            const left = Math.min(...row.map((b) => b.left)) - wb.left;
+            const right = wb.right - Math.max(...row.map((b) => b.right));
+            if (Math.abs(left - right) > 2) {
+              out.push(`quotes row off-centre: ${Math.round(left)}px left vs ${Math.round(right)}px right`);
+            }
+          });
+        }
         return out;
       });
       gaps.forEach((g) => note(`${p} @${w}px card ${g}`));

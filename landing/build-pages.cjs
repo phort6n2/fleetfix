@@ -30,6 +30,17 @@ const href = (slug) => (slug ? `${BASE}/${slug}${SLASH}` : `${BASE}/`);
 const abs = (slug) => SITE.ORIGIN + href(slug);
 const stripTags = (h) => h.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
+/* Google review text is plain text and people really do write lists in it.
+   HTML collapses the newlines, so "I was impressed!\n- best price\n- easiest
+   communication" ran together into one sentence. Escape FIRST, then reintroduce
+   the author's own line breaks as markup — never the other way round, or a
+   review containing <script> would ship as a tag. */
+const quoteText = (s) => esc(String(s).trim())
+  .replace(/\r\n?/g, '\n')
+  .replace(/[ \t]+\n/g, '\n')
+  .replace(/\n{2,}/g, '<br><br>')
+  .replace(/\n/g, '<br>');
+
 function rmrf(p) { fs.rmSync(p, { recursive: true, force: true }); }
 function write(rel, content) {
   const full = path.join(OUTDIR, rel);
@@ -171,17 +182,24 @@ function reviewsSection() {
   }
 
   const who = ATTRIB || B.name;
-  const quotes = (reviews.quotes || []).slice(0, 3).map((q) => `
+  const picked = (reviews.quotes || []).slice(0, 3);
+  const quotes = picked.map((q) => `
       <figure class="quote">
         <span class="stars" aria-label="${q.rating} out of 5 stars">${STAR.repeat(q.rating)}</span>
-        <blockquote>${esc(q.text)}</blockquote>
+        <blockquote>${quoteText(q.text)}</blockquote>
         <cite>${esc(q.author)}<span class="src">Google review for ${esc(who)}${q.when ? ` · ${esc(q.when)}` : ''}</span></cite>
       </figure>`).join('');
+
+  // How many quotes survive the fetch filter is not ours to choose — Google
+  // returns at most five and the quality filter can leave 1, 2 or 3. A fixed
+  // three-column grid strands the leftover columns as dead space (two quotes
+  // left a 433px void at 1440). The column count tracks the card count instead.
+  const cols = `q-${picked.length}`;
 
   // With no quotes yet, the rating still stands on its own — but it must never
   // appear without saying whose rating it is.
   const body = quotes
-    ? `<div class="grid grid-3">${quotes}</div>`
+    ? `<div class="grid quotes ${cols}">${quotes}</div>`
     : `<p class="rev-note">Individual reviews are on ${esc(who)}’s Google listing,
          where you can read them in full and see who wrote them.</p>`;
 
@@ -583,6 +601,16 @@ for (const p of PAGES) {
     }
     if (/aggregateRating/.test(html)) {
       problems.push(`${p.slug || '/'}: aggregateRating present while reviews are attributed to ${ATTRIB}`);
+    }
+  }
+  // The quotes grid sets its column count from its card count. If the two ever
+  // drift apart the leftover columns render as dead space — which is exactly
+  // what two quotes in a hard-coded three-column grid did.
+  if (!p.legal && /class="grid quotes /.test(html)) {
+    const cls = (html.match(/class="grid quotes (q-\d+)"/) || [])[1];
+    const cards = (html.match(/<figure class="quote">/g) || []).length;
+    if (cls !== `q-${cards}`) {
+      problems.push(`${p.slug || '/'}: quotes grid is ${cls || '(no q-N class)'} but holds ${cards} card(s)`);
     }
   }
 }
