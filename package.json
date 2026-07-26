@@ -1,0 +1,19 @@
+{
+  "name": "fleetfix-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Google Ads landing site for FleetFix Glass (quote.fleetfixglass.com)",
+  "scripts": {
+    "build:landing": "node landing/build-pages.cjs",
+    "assets:landing": "node landing/make-assets.cjs",
+    "reviews:landing": "node landing/fetch-reviews.cjs",
+    "serve:landing": "node landing/serve.cjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.0",
+    "sharp": "^0.35.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "FleetFix Glass — Commercial Auto Glass",
+  "short_name": "FleetFix Glass",
+  "description": "Mobile windshield replacement and auto glass repair across Colorado’s Front Range.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#12294b",
+  "icons": [
+    {
+      "src": "/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
