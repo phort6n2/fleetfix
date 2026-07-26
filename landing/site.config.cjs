@@ -78,7 +78,8 @@ module.exports = {
       + 'FleetFix is newer and is still building its own review profile, so these are '
       + 'HV Auto Glass Denver’s Google reviews.',
     // Needed for the weekly refresh. Find it in Google's Place ID finder.
-    placeId: '',
+    // HV Auto Glass Denver.
+    placeId: 'ChIJBUQzsIiLxUMRtPOB1aq2YcE',
     // From HV's own published listing link — used for the "read them" link.
     mapsCid: '13934619566903784372',
     // Identity guard for fetch-reviews.cjs. This must describe the business the
