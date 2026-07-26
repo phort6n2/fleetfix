@@ -236,7 +236,7 @@ const footerAll = [{ slug: '', nav: 'Home' }]
 
 const callAsset = B.callAssetPhone ? `<li>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h5l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v5a15 15 0 0 1-16-16Z"/></svg>
-            <a class="ghl-no-swap" data-no-swap="true" href="tel:${B.callAssetE164}">${B.callAssetPhone}</a>
+            <a class="noswap ghl-no-swap" data-no-swap="true" href="tel:${B.callAssetE164}">${B.callAssetPhone}</a>
           </li>` : '';
 
 const footerNote = [
@@ -530,8 +530,14 @@ for (const p of PAGES) {
     const anchor = new RegExp(`<a[^>]*href="tel:${esc164}"[^>]*>`);
     const tag = (html.match(anchor) || [])[0];
     if (!tag) problems.push(`${p.slug || '/'}: call asset number missing from the page`);
-    else if (!/ghl-no-swap/.test(tag) || !/data-no-swap="true"/.test(tag)) {
-      problems.push(`${p.slug || '/'}: call asset number is not marked no-swap`);
+    else if (!/class="[^"]*\bnoswap\b/.test(tag)) {
+      // GHL's number_pool.js keys off the literal class token "noswap", twice:
+      //   text nodes   -> classList.contains("noswap")   (exact token)
+      //   anchor hrefs -> className.includes("noswap")   (substring)
+      // "ghl-no-swap" satisfies NEITHER, and data-no-swap is never read. Get
+      // this wrong and DNI rewrites the call asset, Google's verification of
+      // the number fails, and the call asset silently stops serving.
+      problems.push(`${p.slug || '/'}: call asset lacks the "noswap" class GHL actually checks`);
     }
     // It must also be the ONLY place that number appears, so DNI has nothing
     // else to catch and visitors are not given two different numbers to call.

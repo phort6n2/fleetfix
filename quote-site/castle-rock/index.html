@@ -880,7 +880,7 @@ body{padding-bottom:76px}
           </li>
           <li>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h5l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v5a15 15 0 0 1-16-16Z"/></svg>
-            <a class="ghl-no-swap" data-no-swap="true" href="tel:+17204774896">(720) 477-4896</a>
+            <a class="noswap ghl-no-swap" data-no-swap="true" href="tel:+17204774896">(720) 477-4896</a>
           </li>
           <li>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -1106,6 +1106,7 @@ body{padding-bottom:76px}
 
 <!-- GHL call tracking (number pool + session) loads last, so every number is in
      the DOM before the swap. Injected by the build only when both IDs are set. -->
-<!-- GHL number pool not configured: set GHL.locationId and GHL.numberPoolId in landing/site.config.cjs -->
+<script src="https://backend.leadconnectorhq.com/appengine/loc/L9OIGvEMdvEEkF4JPdCx/pool/IcUnXUQLuTarA0KZrAMo/number_pool.js"></script>
+<script src="https://backend.leadconnectorhq.com/appengine/js/user_session.js"></script>
 </body>
 </html>

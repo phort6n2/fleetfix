@@ -92,8 +92,8 @@ module.exports = {
   // Number pool (dynamic number insertion). Both must be set for the call
   // tracking scripts to be injected at all.
   GHL: {
-    locationId: '',
-    numberPoolId: '',
+    locationId: 'L9OIGvEMdvEEkF4JPdCx',
+    numberPoolId: 'IcUnXUQLuTarA0KZrAMo',
   },
 
   /* ---------------------------------------------------- form service picker */

@@ -247,8 +247,18 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
     const ctx = await browser.newContext();
     await guardCtx(ctx);
     const page = await ctx.newPage();
-    let external = 0;
-    page.on('request', (r) => { if (!r.url().startsWith(BASE)) external++; });
+    // The GHL number-pool scripts are build-time <script src> tags driven by
+    // site.config.cjs, NOT by the runtime FF_CONFIG this scenario blanks, so
+    // they load either way. That is intended: dynamic number insertion has to
+    // run for call attribution regardless of whether the Ads tag is live.
+    // Count them separately instead of failing on them.
+    let external = 0, dni = 0;
+    page.on('request', (r) => {
+      const u = r.url();
+      if (u.startsWith(BASE)) return;
+      if (u.includes('backend.leadconnectorhq.com')) { dni++; return; }
+      external++;
+    });
     // Blank the live IDs for this scenario so the no-op path can be exercised
     // without loading a real tag or posting a real lead into the CRM.
     await page.addInitScript(() => {
@@ -264,7 +274,9 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
     await page.goto(BASE + '/?gclid=TEST123', { waitUntil: 'load' });
     const dl = await page.evaluate(() => (window.dataLayer || []).length);
     if (dl !== 0) note(`dataLayer populated with empty config (${dl} entries)`);
-    if (external !== 0) note(`${external} external request(s) with empty config`);
+    if (external !== 0) note(`${external} non-DNI external request(s) with empty config`);
+    // And confirm call tracking is actually wired, since it is easy to lose.
+    if (dni !== 2) note(`expected 2 GHL number-pool requests, saw ${dni}`);
 
     // The form must refuse to silently drop a lead when no webhook is set.
     await page.fill('#f-name', 'Jane Tester');
@@ -274,7 +286,7 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
     await page.click('#ff-submit');
     const alerted = await page.isVisible('#ff-alert.on');
     if (!alerted) note('empty webhook config did not surface an error to the user');
-    else console.log('  no tags fired, no external requests, lead not silently dropped');
+    else console.log(`  no tags fired, no non-DNI external requests, lead not silently dropped, ${dni} DNI scripts loaded`);
     await ctx.close();
   }
 
