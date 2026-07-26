@@ -35,10 +35,19 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
 
   const browser = await chromium.launch({ executablePath: EXEC, args: ['--no-sandbox'] });
 
+  /* Safety net. The shipped config contains a live HighLevel webhook, so any
+     accidental real submission from this suite would create a contact in the
+     client's CRM. Fail loudly instead. */
+  const guardCtx = (ctx) => ctx.route('**://services.leadconnectorhq.com/**', (r) => {
+    note('verify attempted a REAL request to the live GHL webhook — blocked');
+    return r.abort();
+  });
+
   /* ---------------- 1. layout + console across widths ---------------- */
   console.log('\nLayout & console');
   for (const w of WIDTHS) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, deviceScaleFactor: 1 });
+    await guardCtx(ctx);
     const page = await ctx.newPage();
     const errors = [];
     page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
@@ -128,6 +137,7 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
   console.log('\nTracking (config populated, ?gclid=TEST123)');
   {
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    await guardCtx(ctx);
     const page = await ctx.newPage();
 
     // Broad stub FIRST, specific handlers AFTER — Playwright uses the LAST
@@ -229,9 +239,19 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
   console.log('\nTracking (config empty — shipped default)');
   {
     const ctx = await browser.newContext();
+    await guardCtx(ctx);
     const page = await ctx.newPage();
     let external = 0;
     page.on('request', (r) => { if (!r.url().startsWith(BASE)) external++; });
+    // Blank the live webhook for this scenario so the "no destination" path can
+    // be exercised without posting a real lead into the CRM.
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'FF_CONFIG', {
+        configurable: true,
+        set(v) { v.GHL_WEBHOOK_URL = ''; this.__v = v; },
+        get() { return this.__v; },
+      });
+    });
     await page.goto(BASE + '/?gclid=TEST123', { waitUntil: 'load' });
     const dl = await page.evaluate(() => (window.dataLayer || []).length);
     if (dl !== 0) note(`dataLayer populated with empty config (${dl} entries)`);
@@ -253,6 +273,7 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
   console.log('\nForm validation');
   {
     const ctx = await browser.newContext();
+    await guardCtx(ctx);
     const page = await ctx.newPage();
     await page.goto(BASE + '/', { waitUntil: 'load' });
     await page.click('#ff-submit');
