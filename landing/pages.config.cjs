@@ -54,15 +54,15 @@ module.exports = { SERVICES, CITIES, PAGES: [
   ctaHeading: 'Get a firm price on your glass',
   body: `
 <h2>Auto glass built around commercial vehicles</h2>
-<p>Most auto glass shops are set up for one car at a time and treat commercial work as an occasional extra. FleetFix runs the other way round. The scheduling, the billing and the van stock are all organised for operators — fleets, contractors, haulers and trades — which is why we can put a technician in your yard and work through six vehicles in an afternoon rather than booking six separate appointments.</p>
+<p>Most auto glass shops are set up for one car at a time and treat commercial work as an occasional extra. FleetFix runs the other way around. The scheduling, the billing and the van stock are all organized for operators — fleets, contractors, haulers and trades — which is why we can put a technician in your yard and work through six vehicles in an afternoon rather than booking six separate appointments.</p>
 <p>That said, we have never turned away a single cracked windshield. The same technician who spends the morning on a distribution fleet spends the afternoon in someone's driveway in Wheat Ridge, and the work is done to the same standard either way.</p>
 
 <h2>What we actually do</h2>
-<p>Windshields are the bulk of it — replacements and chip repairs on everything from a Civic to a Peterbilt. Beyond that we handle door and quarter glass, back glass including heated and sliding rear windows, RV and motorhome windshields, and cab glass on excavators, loaders, skid steers and backhoes. If a vehicle has glass in it and it is broken, it is in scope.</p>
+<p>Windshields are the bulk of it: replacements and chip repairs on everything from a Civic to a Peterbilt. Beyond that we handle door and quarter glass, back glass including heated and sliding rear windows, RV and motorhome windshields, and cab glass on excavators, loaders, skid steers and backhoes. If a vehicle has glass in it and it is broken, it is in scope.</p>
 <p>Where a vehicle has a forward-facing camera mounted to the windshield — which now covers most vehicles built in the last several years — the camera has to be recalibrated after the glass is replaced. We handle that as part of the job rather than sending you somewhere else to finish it.</p>
 
 <h2>Colorado is hard on glass</h2>
-<p>There is a reason windshield work is steady year-round here. Front Range hail season runs through late spring and summer and regularly produces stones large enough to break laminated glass outright. Winter brings sand and magnesium chloride onto every arterial in the state, and both are brutal on a windscreen that already has a chip in it. And the daily temperature swing does the rest: a 60-degree afternoon followed by a hard overnight freeze will turn a chip the size of a pea into a crack running the width of the glass, often without anything hitting it at all.</p>
+<p>There is a reason windshield work is steady year-round here. Front Range hail season runs through late spring and summer and regularly produces stones large enough to break laminated glass outright. Winter brings sand and magnesium chloride onto every arterial in the state, and both are brutal on a windshield that already has a chip in it. And the daily temperature swing does the rest: a 60-degree afternoon followed by a hard overnight freeze can turn a chip the size of a pea into a crack running the width of the glass, often without anything hitting it at all.</p>
 <div class="callout">
 <p><b>If you have a chip, deal with it early.</b> A chip that can be filled in half an hour becomes a full replacement once the crack reaches the edge of the glass or crosses the driver's line of sight. Repairs are also considerably cheaper, and many insurers waive the deductible on a repair specifically because it saves them a replacement later.</p>
 </div>
@@ -78,7 +78,7 @@ module.exports = { SERVICES, CITIES, PAGES: [
 <p>Those are ranges, not quotes. Tell us the year, make and model — or better, the VIN — and we will come back with a firm number that includes the mobile visit, the glass, the fitting and any calibration the vehicle needs. What we quote is what you pay.</p>
 `,
   faq: [
-    { q: 'Do you charge extra to come to me?', a: 'No. Mobile service is how we work rather than an add-on, and there is no travel charge anywhere inside our normal service area — that runs from Greeley in the north to Castle Rock in the south, and across the metro from Golden to Aurora. If you are outside that, call and ask; we will either quote the trip honestly or tell you that someone closer makes more sense.' },
+    { q: 'Do you charge extra to come to me?', a: 'No. Mobile service is how we work rather than an add-on, and there is no travel charge anywhere inside our normal service area — that runs from Greeley in the north to Castle Rock in the south, and across the metro from Golden to Aurora. If you are outside that, call and ask; we will either quote the trip or tell you that someone closer makes more sense.' },
     FAQ_INSURANCE,
     { q: 'How long does a replacement take?', a: 'Around 45 to 60 minutes of fitting time for a typical car or light pickup, and 60 to 90 minutes for larger commercial vehicles. The part that catches people out is the adhesive cure — the urethane needs time to reach the strength where the windshield can do its structural job in a crash. Your technician will give you a specific safe drive-away time on the day, because it depends on the adhesive used and the temperature it cured at.' },
     { q: 'What vehicles do you work on?', a: 'Passenger cars, pickups, vans, box trucks, semi tractors, buses, motorhomes, and construction plant such as excavators, loaders, skid steers and backhoes. Farm equipment cab glass too. The awkward ones are usually a sourcing question rather than a fitting question, so the sooner we have the VIN or the serial plate the sooner we can confirm a date.' },
@@ -125,13 +125,13 @@ module.exports = { SERVICES, CITIES, PAGES: [
 </div>
 
 <h2>How the appointment runs</h2>
-<p>We confirm the glass against your VIN and bring it with us. On site the technician protects the interior and paintwork, cuts out the old glass, cleans and primes the pinch weld, lays fresh urethane and sets the new windshield. Old glass leaves with us for recycling. Then the camera is calibrated if the vehicle needs it, and you get an itemised invoice and the safe drive-away time.</p>
-<p>Level ground and reasonable access are all we need. There is no requirement for a power outlet — the van carries its own.</p>
+<p>We confirm the glass against your VIN and bring it with us. On site the technician protects the interior and paintwork, cuts out the old glass, cleans and primes the pinch weld, lays fresh urethane and sets the new windshield. Old glass leaves with us for recycling. The camera is then calibrated if the vehicle needs it, and you get an itemized invoice and the safe drive-away time.</p>
+<p>Level ground and reasonable access are all we need. There is no requirement for a power outlet, because the van carries its own.</p>
 `,
   faq: [
     { q: 'Can you replace glass outdoors in winter?', a: 'Usually, yes. We carry cold-weather urethane rated for low-temperature application and we work under cover where we can. What we will not do is fit glass in conditions that stop the adhesive curing properly — driving snow, or temperatures below what the product is rated for. If that is the situation on the day we will say so and rebook rather than hand you a windshield that is not bonded correctly.' },
-    { q: 'Is OEM-equivalent glass as safe as manufacturer glass?', a: 'Yes, in the sense that matters: both have to meet the same federal safety standard for automotive glazing, and both are laminated to the same construction. The genuine article carries the vehicle maker’s branding and is built on their tooling, which occasionally gives a closer fit on optical distortion near the edges. For most vehicles the equivalent is what your insurer will approve and what we would fit to our own vehicles.' },
-    { q: 'Will my ADAS camera definitely need recalibrating?', a: 'If the vehicle has a windshield-mounted forward camera, then yes — manufacturers specify recalibration after glass replacement, without exception. We confirm what your specific vehicle requires when we quote, so there is no surprise line item afterwards.' },
+    { q: 'Is OEM-equivalent glass as safe as manufacturer glass?', a: 'Yes, in the sense that matters: both have to meet the same federal safety standard for automotive glazing, and both are laminated safety glass built to that standard. They are not identical — interlayer thickness, acoustic layers and bracket detail can differ, which is exactly why we match to the VIN. The genuine article carries the vehicle maker’s branding and is built on their tooling, which occasionally gives a closer fit on optical distortion near the edges. For most vehicles the equivalent is what your insurer will approve and what we would fit to our own vehicles.' },
+    { q: 'Will my ADAS camera definitely need recalibrating?', a: 'If the vehicle has a windshield-mounted forward camera, then yes — manufacturers specify recalibration after windshield replacement. We confirm what your specific vehicle requires when we quote, so there is no surprise line item afterwards.' },
     FAQ_INSURANCE,
     { q: 'What does the warranty actually cover?', a: 'Our workmanship, for as long as you own the vehicle. If the installation leaks, whistles, or the seal fails, we come back and put it right at no cost. It does not cover new impact damage — a fresh rock is a fresh rock — and it does not cover a defect in the glass itself, which is handled under the manufacturer’s warranty.' },
   ],
@@ -157,10 +157,10 @@ module.exports = { SERVICES, CITIES, PAGES: [
   body: `
 <h2>Why repairing beats replacing when you can</h2>
 <p>The glass your vehicle left the factory with was bonded in a controlled environment by robots, and that original seal is genuinely difficult to improve on. Every replacement, however well done, means cutting that bond out and creating a new one. If the damage can be repaired instead, you keep the factory seal, you keep the original glass, and you avoid recalibrating any camera mounted to it.</p>
-<p>It is also faster and cheaper by a wide margin, and it does not put your vehicle out of action for a cure period. For a fleet, that difference compounds: a repair is a half-hour stop, a replacement is most of a working day once cure time is counted.</p>
+<p>It is also faster and considerably cheaper, and it does not put your vehicle out of action for a cure period. For a fleet, that difference compounds: a repair is a half-hour stop, a replacement is most of a working day once cure time is counted.</p>
 
 <h2>What can actually be repaired</h2>
-<p>The honest answer is that it depends on size, location and age, and there is no substitute for looking at it. As a general guide, we can usually fill:</p>
+<p>It depends on size, location and age, and there is no substitute for looking at it. As a general guide, we can usually fill:</p>
 <ul>
 <li>Bullseyes, stars and combination breaks up to roughly the size of a quarter</li>
 <li>Single cracks up to about six inches long that have not reached the edge of the glass</li>
@@ -169,11 +169,11 @@ module.exports = { SERVICES, CITIES, PAGES: [
 <p>What we generally cannot repair: damage sitting directly in the driver's primary line of sight, where even a well-executed repair leaves slight distortion; cracks that have run to the edge of the glass, because the edge is where the structural load sits; damage over a sensor or camera mount; and breaks that have been open long enough to fill with dirt and moisture, because the resin cannot bond to a contaminated cavity.</p>
 
 <div class="callout">
-<p><b>Time is the enemy.</b> A chip is a sealed void until it isn't. Once water gets in, freezes overnight and expands, the break spreads — and Colorado's overnight temperature swings do this reliably. The gap between "half-hour repair" and "full replacement" is often a single cold night.</p>
+<p><b>Time is the enemy.</b> Once water gets into the break, freezes overnight and expands, the break spreads — and Colorado's overnight temperature swings do this reliably. The gap between "half-hour repair" and "full replacement" is often a single cold night.</p>
 </div>
 
 <h2>How the repair is done</h2>
-<p>The technician cleans the break out and removes moisture and loose glass from the cavity. A bridge is fixed over the damage and the air is drawn out under vacuum — this is the part that matters, because a repair is only as good as how completely the void is emptied before resin goes in. Optically-matched resin is then injected under pressure, worked into the legs of the break, and cured with ultraviolet light. The surface is levelled flush and polished.</p>
+<p>The technician cleans the break out and removes moisture and loose glass from the cavity. A bridge is fixed over the damage and the air is drawn out under vacuum — this is the part that matters, because a repair is only as good as how completely the void is emptied before resin goes in. Optically-matched resin is then injected under pressure, worked into the legs of the break, and cured with ultraviolet light. The surface is leveled flush and polished.</p>
 <p>You should expect the damage to become much less visible and structurally stable — you should not expect it to vanish completely. Anyone promising an invisible repair is overselling it. What you are buying is a break that has stopped spreading and glass that keeps its strength.</p>
 
 <h2>Multiple vehicles, one visit</h2>
@@ -181,10 +181,10 @@ module.exports = { SERVICES, CITIES, PAGES: [
 `,
   faq: [
     { q: 'How long before I can drive?', a: 'Straight away. The resin is cured with UV light during the appointment, so there is no waiting period — unlike a replacement, where the adhesive needs time to reach strength. You can drive off as soon as the technician has polished the surface.' },
-    { q: 'Will the chip disappear completely?', a: 'No, and be sceptical of anyone who says it will. A good repair typically removes most of the visible damage and leaves a faint mark where the impact point was. The point of the repair is structural — it stops the break spreading and restores the strength of the glass. Cosmetic improvement is a welcome side effect rather than the goal.' },
+    { q: 'Will the chip disappear completely?', a: 'No, and be skeptical of anyone who says it will. A good repair typically removes most of the visible damage and leaves a faint mark where the impact point was. The point of the repair is structural — it stops the break spreading and restores the strength of the glass. Cosmetic improvement is a welcome side effect rather than the goal.' },
     { q: 'Is a repair really covered with no deductible?', a: 'Frequently, yes — many carriers waive the deductible on a chip repair specifically because filling a chip for a small sum is cheaper for them than a full replacement later. It depends on your policy rather than on state law, so we verify your coverage before we come out and tell you exactly where you stand.' },
     { q: 'How many chips can you fill at once?', a: 'There is no fixed limit, but the breaks need to be far enough apart that the glass between them is not already compromised. Several separate chips across a windshield are usually all repairable. A cluster of breaks in one area often is not, because the glass in that zone has lost too much integrity — in that case we would recommend replacement and say so plainly.' },
-    { q: 'What if you get here and it cannot be repaired?', a: 'We tell you, we explain why, and we quote the replacement. You are under no obligation to book it with us on the spot. We would much rather lose a job than fill a break that is going to spread anyway and have you back in a fortnight.' },
+    { q: 'What if you get here and it cannot be repaired?', a: 'We tell you, we explain why, and we quote the replacement. You are under no obligation to book it with us on the spot. We would much rather lose a job than fill a break that is going to spread anyway and have you back in two weeks.' },
   ],
 },
 
@@ -208,11 +208,11 @@ module.exports = { SERVICES, CITIES, PAGES: [
   body: `
 <h2>The real cost of a cracked windshield is not the windshield</h2>
 <p>For an operator, glass is rarely the expensive part. The expensive part is the vehicle sitting still, the driver reassigned, the job rescheduled and the dispatcher spending an afternoon on it. A $350 windshield on a unit that bills $900 a day is not a $350 problem.</p>
-<p>That is the whole design brief for our fleet programme. Everything about it is aimed at compressing downtime rather than shaving a few dollars off the glass.</p>
+<p>That is the design brief for our fleet program: everything about it aims at compressing downtime rather than shaving a few dollars off the glass.</p>
 
 <h2>How a fleet account works</h2>
 <h3>Service days instead of appointments</h3>
-<p>Rather than booking vehicles in one at a time, we schedule a block at your yard and work through the list. A technician arrives with the glass for every unit already sourced against its VIN, and units get handled as they become free — a driver returning at eleven does not lose their slot because they were not there at nine. Most operators find this alone removes the majority of the coordination overhead.</p>
+<p>Rather than booking vehicles in one at a time, we schedule a block at your yard and work through the list. A technician arrives with the glass for every unit already sourced against its VIN, and units get handled as they become free — a driver returning at eleven does not lose their slot because they were not there at nine.</p>
 
 <h3>Priority scheduling for breakdowns</h3>
 <p>Planned work is one thing; a truck that took a rock this morning is another. Account holders go to the front of the queue for urgent work, and where the damage is repairable we will usually get someone out the same day.</p>
@@ -221,10 +221,10 @@ module.exports = { SERVICES, CITIES, PAGES: [
 <p>We invoice against your PO numbers, reference your unit numbers on every line, and offer net-30 terms once the account is approved. Statements can be consolidated monthly rather than arriving per job, which makes reconciliation something one person does once rather than something accounts payable does forty times.</p>
 
 <h3>A record against each unit</h3>
-<p>Every job is logged against the vehicle: what was done, when, which glass went in, and whether a camera was recalibrated. When a unit comes up for inspection, gets sold on, or a question arises about a previous repair, the history exists. This turns out to matter far more to fleet managers than anyone expects at the point of setting the account up.</p>
+<p>Every job is logged against the vehicle: what was done, when, which glass went in, and whether a camera was recalibrated. When a unit comes up for inspection, gets sold on, or a question arises about a previous repair, the history exists.</p>
 
 <h2>Fleets we look after</h2>
-<p>The mix is broad: delivery and last-mile operations, plumbing, electrical and HVAC trades running vans out of metro yards, general contractors with pickups and plant spread over multiple sites, regional haulers running the I-25 corridor, municipal and utility fleets, agricultural operations in Weld County, and equipment rental yards. Vehicle types run from Transit vans through to Class 8 tractors and tracked excavators.</p>
+<p>The mix is broad: delivery and last-mile operations; plumbing, electrical and HVAC trades running vans out of metro yards; general contractors with pickups and plant spread over multiple sites; regional haulers on the I-25 corridor; municipal and utility fleets; agricultural operations in Weld County; and equipment rental yards. Vehicle types run from Transit vans through to Class 8 tractors and tracked excavators.</p>
 
 <div class="callout">
 <p><b>Compliance angle worth knowing.</b> Windshield damage in the driver's primary viewing area can put a commercial vehicle out of service at a roadside inspection. If you are running DOT-regulated units, glass belongs on the pre-trip checklist — and a chip caught in a yard walkthrough is dramatically cheaper than one caught at a scale house.</p>
@@ -252,7 +252,7 @@ module.exports = { SERVICES, CITIES, PAGES: [
   h1: 'Truck windshield replacement in Denver for pickups, vans and box trucks',
   sub: 'Half-ton to heavy-duty, cargo van to box truck, including vehicles carrying racks, service bodies and upfits that a general shop would rather not deal with.',
   heroPoints: [
-    'Ford, Chevrolet, GMC, Ram, Toyota, Isuzu, Hino and Freightliner chassis',
+    'Ford, Chevrolet, GMC, Ram, Toyota, Nissan, Isuzu, Hino and Freightliner chassis',
     'Upfitted trucks welcome — racks, toppers, service bodies and liftgates',
     'Serviced at your yard or job site, so the truck stays where the work is',
   ],
@@ -265,7 +265,7 @@ module.exports = { SERVICES, CITIES, PAGES: [
 <p>We do this daily, so the awkward parts are planned for rather than discovered on site. If your truck has an upfit, tell us what it is when you call and the technician arrives with the right hands and the right kit.</p>
 
 <h2>What we work on</h2>
-<p>Half-ton through one-ton pickups across all the usual makes — F-150 through F-450, Silverado and Sierra including 2500HD and 3500HD, Ram 1500 through 5500, Tundra, Titan. Cargo and passenger vans: Transit, E-Series, Sprinter, ProMaster, Express and Savana. Box trucks and cutaway chassis from Isuzu, Hino, Freightliner and the domestic manufacturers. Flatbeds, dumps, stake beds, tow trucks and service rigs.</p>
+<p>Half-ton through one-ton pickups across all the usual makes — F-150 through F-450, Silverado and Sierra including 2500HD and 3500HD, Ram 1500 through 5500, Tundra and Nissan Titan. Cargo and passenger vans: Transit, E-Series, Sprinter, ProMaster, Express and Savana. Box trucks and cutaway chassis from Isuzu, Hino, Freightliner and the domestic manufacturers. Flatbeds, dumps, stake beds, tow trucks and service rigs.</p>
 <p>Box truck cabs deserve a specific mention: the glass is often a flat or lightly curved unit sitting in a rubber gasket rather than bonded in urethane, which is a genuinely different fitting method. Both are routine for us, but they are not interchangeable skills, and a shop that only does passenger cars will struggle with the gasket-set ones.</p>
 
 <h2>Getting the right glass first time</h2>
@@ -312,14 +312,14 @@ module.exports = { SERVICES, CITIES, PAGES: [
 <p>Which is why we treat semi glass as urgent work by default. A cracked tractor windshield is not something to schedule for next week.</p>
 
 <h2>One-piece, two-piece, and why it matters</h2>
-<p>Heavy tractors split into two camps. Some take a single large curved windshield; others take two flat or lightly curved halves divided by a centre post. The distinction is not cosmetic — it changes the sourcing, the fitting method and the price, and it is usually possible to replace just the damaged half on a two-piece truck, which is a meaningful saving.</p>
-<p>Broadly: Peterbilt and Kenworth conventionals are commonly two-piece, while many Freightliner Cascadia, Volvo VNL and International LT configurations run one-piece. There is enough variation by model year and cab that we confirm against the VIN rather than assuming. Older cabovers and vocational trucks add further permutations.</p>
+<p>Heavy tractors split into two camps. Some take a single large curved windshield; others take two flat or lightly curved halves divided by a center post. The distinction is not cosmetic — it changes the sourcing, the fitting method and the price, and it is usually possible to replace just the damaged half on a two-piece truck, which is a meaningful saving.</p>
+<p>Which one you have is not reliably predictable from the make — it varies by model, model year and cab configuration, and the same nameplate can be built either way across a production run. So we confirm against the VIN rather than assuming, and we tell you which it is when we quote. Older cabovers and vocational trucks add further permutations again.</p>
 
 <h2>Makes we handle</h2>
-<p>Freightliner Cascadia, Columbia, Coronado and M2. Peterbilt 379, 389, 567, 579 and 587. Kenworth W900, T680, T800 and T880. Volvo VNL and VNR. Mack Anthem, Pinnacle and Granite. International LT, ProStar, LoneStar and HX. Western Star across the 47, 49 and 57 series. Vocational and vocational-adjacent units — mixers, dumps, refuse, cranes — are all in scope too.</p>
+<p>Freightliner Cascadia, Columbia, Coronado and M2. Peterbilt 379, 389, 567, 579 and 587. Kenworth W900, T680, T800 and T880. Volvo VNL and VNR. Mack Anthem, Pinnacle and Granite. International LT, ProStar, LoneStar and HX. Western Star 4700, 4900 and 5700. Vocational units — mixers, dumps, refuse and cranes — are all in scope too.</p>
 
 <h2>Working at a terminal</h2>
-<p>Bringing a tractor to a glass shop is expensive in a way that is easy to underestimate: you are moving an 80,000-pound-capable vehicle, paying a driver to sit through the job, and losing most of a shift. So we come to you — terminals, drop yards, truck stops, distribution centres, or the shoulder of your own lot.</p>
+<p>Bringing a tractor to a glass shop is expensive in a way that is easy to underestimate: you are moving an 80,000-pound-capable vehicle, paying a driver to sit through the job, and losing most of a shift. So we come to you — terminals, drop yards, truck stops, distribution centers, or the shoulder of your own lot.</p>
 <p>What we need is straightforward: the tractor on level ground, clearance to work across the full width of the cab, and ideally the unit not blocked in by trailers. We bring everything else. Heavy glass is a two-technician job and we staff it that way rather than having one person wrestle a windshield the size of a door.</p>
 
 <div class="callout">
@@ -330,10 +330,10 @@ module.exports = { SERVICES, CITIES, PAGES: [
 <p>If you are running a yard with several tractors needing glass, we will schedule a block and work through them. Units get sourced against their individual VINs beforehand so there is no waiting on parts mid-visit, and each one is invoiced against your unit number and PO. For carriers running the corridor between Greeley and Castle Rock this is usually the cheapest way to clear a backlog of deferred glass work.</p>
 `,
   faq: [
-    { q: 'Can you replace just one half of a two-piece windshield?', a: 'Yes, and on a split-glass tractor that is usually exactly what we do — there is no reason to replace undamaged glass. It brings the cost down substantially compared with doing both sides. If the centre seal or the post gasket is also perished we will flag it, because replacing the glass and leaving a failed seal behind just produces a leak.' },
-    { q: 'How quickly can you get a tractor back in service?', a: 'The fitting itself is usually 60 to 90 minutes with two technicians, plus the adhesive cure before the unit can be dispatched. The variable is glass availability: common Cascadia and T680 units we can often source same-day or next-day, while an older or vocational cab may take longer. Give us the VIN as early as you can and we will tell you honestly when we can be there.' },
-    { q: 'Will a cracked windshield fail a DOT inspection?', a: 'It can. Federal standards restrict damage in the driver’s primary viewing area, and an inspector has discretion to place the vehicle out of service over it. Damage outside that zone is judged on size and whether it intrudes on the swept area. We are glass fitters rather than compliance officers, so treat this as a reason to get it looked at rather than as a legal opinion.' },
-    { q: 'Do you service owner-operators as well as fleets?', a: 'Absolutely. A single truck gets the same technicians and the same glass as a hundred-unit carrier. Fleet accounts exist for the billing and scheduling side, not because we prioritise big customers over small ones.' },
+    { q: 'Can you replace just one half of a two-piece windshield?', a: 'Yes, and on a split-glass tractor that is usually exactly what we do — there is no reason to replace undamaged glass. It brings the cost down substantially compared with doing both sides. If the center seal or the post gasket is also perished we will flag it, because replacing the glass and leaving a failed seal behind just produces a leak.' },
+    { q: 'How quickly can you get a tractor back in service?', a: 'The fitting itself is usually 90 to 120 minutes with two technicians, plus the adhesive cure before the unit can be dispatched. The variable is glass availability: common Cascadia and T680 units we can often source same-day or next-day, while an older or vocational cab may take longer. Give us the VIN as early as you can and we will give you a realistic date.' },
+    { q: 'Will a cracked windshield fail a DOT inspection?', a: 'It can. The federal rule (49 CFR 393.60) allows limited damage inside the area swept by the wipers — broadly, a chip up to about three quarters of an inch across provided it is not close to other damage, and cracks that do not intersect one another. Beyond those limits, or where an inspector judges the damage to obstruct the driver’s view, the unit can be placed out of service. Damage outside the swept area is far less restricted. We are glass fitters rather than compliance officers, so treat this as a reason to get it looked at rather than as a legal opinion.' },
+    { q: 'Do you service owner-operators as well as fleets?', a: 'Absolutely. A single truck gets the same technicians and the same glass as a hundred-unit carrier. Fleet accounts exist for the billing and scheduling side, not because we prioritize big customers over small ones.' },
     { q: 'Can you work at a truck stop or on the road?', a: 'Often, yes, provided the tractor is parked safely on level ground with room to work. We will not fit glass on a live shoulder — it is not safe for our technicians or for you. If you are stuck somewhere unsuitable, call and we will work out the nearest sensible place to meet.' },
   ],
 },
@@ -349,7 +349,7 @@ module.exports = { SERVICES, CITIES, PAGES: [
   sub: 'Every job we do is a mobile job. The van carries the glass, the adhesive, the tools and its own power — so the vehicle never has to leave your driveway, your yard or your site.',
   heroPoints: [
     'No travel charge anywhere inside our normal service area',
-    'Home, office car park, construction site or fleet yard — all routine',
+    'Home, office parking lot, construction site or fleet yard — all routine',
     'No power outlet needed; the van runs everything it brings',
   ],
   servicesHeading: 'What we can do on site',
@@ -357,12 +357,12 @@ module.exports = { SERVICES, CITIES, PAGES: [
   ctaHeading: 'Book a mobile visit',
   body: `
 <h2>Mobile is the default, not the upgrade</h2>
-<p>Plenty of glass companies offer mobile service as a paid extra on top of a shop-based business. We built the other way round: the vans are the operation, and they are stocked and equipped on that basis. There is no travel surcharge inside our service area because there is no shop appointment to compare it against.</p>
+<p>Plenty of glass companies offer mobile service as a paid extra on top of a shop-based business. We built the other way around: the vans are the operation, and they are stocked and equipped on that basis. There is no travel surcharge inside our service area because there is no shop appointment to compare it against.</p>
 <p>Practically, that means you do not lose half a day. The windshield gets replaced while your van is parked at the job, while your car sits outside your office, or while the tractor waits at the terminal between loads.</p>
 
 <h2>Where we work</h2>
-<p>Residential driveways and street parking, apartment and condominium car parks, office and business park lots, construction sites, fleet yards and depots, truck terminals and drop yards, dealership and rental lots, agricultural yards and equipment pads. If a vehicle can be parked there safely and legally, we can usually work on it there.</p>
-<p>The exceptions are worth being direct about. We will not work on a live traffic shoulder or in a lane, because it is not safe for anyone. Tight underground car parks with low clearance can be a problem for setting large glass. And we cannot fit on a steep slope — the vehicle needs to be reasonably level for the glass to seat correctly while the adhesive sets.</p>
+<p>Residential driveways and street parking, apartment and condominium parking lots, office and business park lots, construction sites, fleet yards and depots, truck terminals and drop yards, dealership and rental lots, agricultural yards and equipment pads. If a vehicle can be parked there safely and legally, we can usually work on it there.</p>
+<p>The exceptions are worth being direct about. We will not work on a live traffic shoulder or in a lane, because it is not safe for anyone. Tight underground parking lots with low clearance can be a problem for setting large glass. And we cannot fit on a steep slope — the vehicle needs to be reasonably level for the glass to seat correctly while the adhesive sets.</p>
 
 <h2>What we need from you</h2>
 <ul>
@@ -381,13 +381,13 @@ module.exports = { SERVICES, CITIES, PAGES: [
 </div>
 
 <h2>Multiple vehicles in one visit</h2>
-<p>The economics of mobile work strongly favour doing several vehicles at once, which is why fleet service days exist. If you have more than a couple of units needing glass, grouping them into one visit is cheaper for you and more efficient for us — and we will price it accordingly.</p>
+<p>The economics of mobile work strongly favor doing several vehicles at once, which is why fleet service days exist. If you have more than a couple of units needing glass, grouping them into one visit is cheaper for you and more efficient for us — and we will price it accordingly.</p>
 `,
   faq: [
     { q: 'Is mobile service really free?', a: 'Inside our normal service area, yes — there is no separate travel or call-out charge, and the price we quote for the glass is the price you pay. Outside that area we will quote the trip honestly rather than hiding it, or tell you if someone closer to you makes better sense.' },
     { q: 'Do I need to be there the whole time?', a: 'Usually not. As long as the technician can access the vehicle and reach you by phone, you can carry on with your day. We will call before arriving and again when the job is finished, and the invoice and safe drive-away time come through the same way.' },
-    { q: 'Can you work in an apartment or underground car park?', a: 'Surface car parks are no problem at all. Underground and multi-storey car parks depend on clearance and ventilation — there is often not enough headroom to manoeuvre a large windshield safely. Tell us the situation when you book and we will either confirm it works or suggest moving the vehicle to street level for the appointment.' },
-    { q: 'What happens if the weather turns on the day?', a: 'We call you. If the conditions will stop the adhesive curing properly we rebook rather than fitting anyway — a windshield that has not bonded correctly is a structural problem, not a cosmetic one. For chip repairs the bar is lower, since those cure under UV light and are far less weather-sensitive.' },
+    { q: 'Can you work in an apartment or underground parking lot?', a: 'Surface parking lots are no problem at all. Underground and multi-level parking garages depend on clearance and ventilation — there is often not enough headroom to maneuver a large windshield safely. Tell us the situation when you book and we will either confirm it works or suggest moving the vehicle to street level for the appointment.' },
+    { q: 'What happens if the weather turns on the day?', a: 'We call you. If the conditions will stop the adhesive curing properly we rebook rather than fitting anyway — a windshield that has not bonded correctly is a structural problem, not a cosmetic one. For chip repairs the bar is lower than for a bonded replacement, since the resin cures under UV light rather than depending on ambient conditions — though we still will not fill a break that is wet or frozen, because the resin cannot bond to it.' },
     { q: 'How far do you travel?', a: 'Greeley in the north to Castle Rock in the south, and across the metro from Golden through to Aurora — plus everything between, including Boulder, Longmont, Parker, Broomfield, Thornton, Arvada, Westminster, Lakewood, Littleton, Centennial and Commerce City. If you are not sure whether you are in range, call and ask.' },
   ],
 },
@@ -415,12 +415,12 @@ module.exports = { SERVICES, CITIES, PAGES: [
   ctaHeading: 'Get a Denver quote',
   body: `
 <h2>Auto glass across the Denver metro</h2>
-<p>Our premises sit at 1440 Sheridan Boulevard, on the boundary between Denver and Lakewood — though the building is mostly where glass is stored and vans are loaded. The actual work happens wherever your vehicle already is: a loading dock in RiNo, a car park in the Tech Center, a driveway in Park Hill, a contractor's yard off Sixth Avenue.</p>
-<p>Being metro-based means short drives, which is why Denver postcodes tend to get the tightest arrival windows and the best odds on a same-day chip repair.</p>
+<p>Our premises sit at 1440 Sheridan Boulevard, on the boundary between Denver and Lakewood — though the building is mostly where glass is stored and vans are loaded. The actual work happens wherever your vehicle already is: a loading dock in RiNo, a parking lot in the Tech Center, a driveway in Park Hill, a contractor's yard off Sixth Avenue.</p>
+<p>Being metro-based means short drives, which is why Denver ZIP codes tend to get the tightest arrival windows and the best odds on a same-day chip repair.</p>
 
 <h2>Why Denver eats windshields</h2>
 <h3>The Valley Highway</h3>
-<p>I-25 through the middle of the city carries a punishing volume of aggregate and construction traffic, and the section between Sixth Avenue and Alameda has been in some state of roadworks for years. Temporary concrete barriers narrow the shoulders, loose material collects along them, and passing traffic flings it. Following a loaded dump truck through there is one of the more reliable ways to acquire a chip in this city.</p>
+<p>I-25 through the middle of the city carries a punishing volume of aggregate and construction traffic, and the section between Sixth Avenue and Alameda has been in some state of road construction for years. Temporary concrete barriers narrow the shoulders, loose material collects along them, and passing traffic flings it. Following a loaded dump truck through there is one of the more reliable ways to acquire a chip in this city.</p>
 
 <h3>I-70 and the mountain corridor</h3>
 <p>Every load of gravel and aggregate coming down from the high country moves through the metro, and trucks shed material at highway speed. Damage picked up on the westbound climb tends to arrive as a star break rather than a tidy bullseye, because the closing speed is higher.</p>
@@ -432,17 +432,17 @@ module.exports = { SERVICES, CITIES, PAGES: [
 <p>The metro sits inside the Front Range hail belt, and the storms that come off the foothills on summer afternoons are capable of producing stones large enough to break laminated glass outright. Hail seasons here produce genuine surges in glass demand, and after a significant storm the constraint becomes glass availability rather than fitting capacity.</p>
 
 <h2>Commercial work in Denver</h2>
-<p>Most of our metro volume is commercial. There is the warehouse and distribution corridor running east along I-70 toward the airport, the trades operating out of yards in Globeville and Commerce City, the service vans working out of the Tech Center and the Interlocken side, and the contractor fleets following the residential build-out on the metro's edges.</p>
+<p>Most of our metro volume is commercial. There is the warehouse and distribution corridor running east along I-70 toward the airport, the trades operating out of yards in Globeville and Commerce City, the service vans working out of the Tech Center and the business parks along Havana, and the contractor fleets following the residential build-out on the metro's edges.</p>
 <p>What those operators have in common is that they cannot spare vehicles for shop appointments. So we run yard-side service days — a technician arrives with glass sourced against each unit's VIN, and works through the list while the vehicles that are out on jobs come back in their own time.</p>
 
 <div class="callout">
-<p><b>Parking in Denver is the practical constraint.</b> Downtown, LoDo and Cherry Creek jobs need a spot where we can work across the front of the vehicle for the best part of an hour. Street parking is usually workable outside peak hours; a surface car park is easier. Tell us where the vehicle will be and we will tell you honestly whether it works.</p>
+<p><b>Parking in Denver is the practical constraint.</b> Downtown, LoDo and Cherry Creek jobs need a spot where we can work across the front of the vehicle for the best part of an hour. Street parking is usually workable outside peak hours; a surface parking lot is easier. Tell us where the vehicle will be and we will confirm whether it works.</p>
 </div>
 `,
   faq: [
-    { q: 'Which parts of the Denver metro do you cover?', a: 'All of it. Central Denver, the northeast out toward the airport, Park Hill, Stapleton, Green Valley Ranch, the Highlands, Washington Park and Cherry Creek, plus Lakewood, Wheat Ridge, Golden, Arvada, Westminster, Thornton, Commerce City, Aurora, Glendale, Englewood, Littleton and Centennial. There is no travel charge anywhere inside that.' },
+    { q: 'Which parts of the Denver metro do you cover?', a: 'All of it. Central Denver, the northeast out toward the airport, Park Hill, Central Park, Green Valley Ranch, the Highlands, Washington Park and Cherry Creek, plus Lakewood, Wheat Ridge, Golden, Arvada, Westminster, Thornton, Commerce City, Aurora, Glendale, Englewood, Littleton and Centennial. There is no travel charge anywhere inside that.' },
     { q: 'Can you come downtown?', a: 'Yes, and we do constantly. The only real question is parking — the technician needs space across the front of the vehicle for roughly an hour. Surface lots and garage spaces with headroom are ideal, street parking works outside the busiest hours, and a loading dock is perfect if you have access to one.' },
-    { q: 'How quickly can someone get to me in Denver?', a: 'Being metro-based, Denver postcodes usually get the shortest lead times we offer. Chip repairs can often be fitted in same-day when the schedule allows. Replacements depend mainly on glass availability for your specific vehicle rather than on our capacity — give us the VIN and we can tell you the same day.' },
+    { q: 'How quickly can someone get to me in Denver?', a: 'Being metro-based, Denver ZIP codes usually get the shortest lead times we offer. Chip repairs can often be fitted in same-day when the schedule allows. Replacements depend mainly on glass availability for your specific vehicle rather than on our capacity — give us the VIN and we can tell you the same day.' },
     { q: 'Do you handle hail damage claims?', a: 'Yes, and we bill the carrier directly. Worth knowing: after a major hail event across the metro, demand for glass spikes hard and specific windshields can go on backorder nationally. Reporting the claim and getting the vehicle booked early makes a real difference to how long you wait.' },
     { q: 'Is your Sheridan Boulevard location a drop-in shop?', a: 'It is primarily our base for stock and vans rather than a walk-in retail counter, and essentially all of our work is done mobile. Call before coming by — in almost every case it is faster and easier for us to come to you instead.' },
   ],
@@ -470,21 +470,18 @@ module.exports = { SERVICES, CITIES, PAGES: [
 <h2>Glass work in Boulder County</h2>
 <p>Boulder generates a distinctive mix of glass work. There are the institutional fleets — university vehicles, research park vans out at Gunbarrel, lab couriers moving samples between buildings. There are the trades and delivery operators threading vans through downtown alleys. And there are several thousand people who drive a canyon road twice a day and pay for it in windshield damage.</p>
 
-<h2>Three roads that account for most of it</h2>
+<h2>Two roads that account for most of it</h2>
 <h3>The Diagonal</h3>
 <p>CO-119 between Boulder and Longmont carries dense commuter traffic at speed on a surface that has been patched, milled and resurfaced repeatedly. Loose chip from the patching sits in the wheel tracks and gets thrown by everything that passes. It is comfortably the most common single origin story we hear from Boulder customers.</p>
 
 <h3>Boulder Canyon</h3>
 <p>Canyon Boulevard turning into CO-119 heading up toward Nederland is a different mechanism entirely. Here the material comes off the canyon walls rather than the road surface — rockfall and scree accumulate on the narrow shoulders and get redistributed by traffic. The tight lanes mean you often pass oncoming vehicles at close quarters with no room to move over, and the damage tends to be higher-energy than a straightforward highway chip.</p>
 
-<h3>US-36 and Foothills</h3>
-<p>The turnpike down to Denver and Foothills Parkway both run high-speed commuter volume. Nothing exotic about the mechanism — just a lot of vehicles at 65 miles an hour and the arithmetic of how often something gets kicked up.</p>
-
 <h2>Wind, which nobody expects</h2>
-<p>Boulder's downslope windstorms are a genuine local hazard and a real cause of glass damage. When conditions line up over the Front Range, gusts coming off the foothills routinely reach speeds that lift gravel, strip branches and send construction material across car parks. Damage from a windstorm frequently shows up as multiple small impacts across a windshield rather than one clean chip — and a cluster of breaks in one area is often past the point where repair is sensible.</p>
+<p>Boulder's downslope windstorms are a genuine local hazard and a real cause of glass damage. When conditions line up over the Front Range, gusts coming off the foothills routinely reach speeds that lift gravel, strip branches and send construction material across parking lots. Damage from a windstorm frequently shows up as multiple small impacts across a windshield rather than one clean chip — and a cluster of breaks in one area is often past the point where repair is sensible.</p>
 
 <h2>Altitude and ultraviolet</h2>
-<p>At around 5,400 feet Boulder gets meaningfully more ultraviolet exposure than a sea-level city. That does not break glass on its own, but it does accelerate the ageing of the polyvinyl butyral interlayer bonding a laminated windshield and it degrades the resin in an older repair. A chip filled several years ago on a vehicle that lives outdoors here is worth a look, particularly if the repair has started to yellow or lift.</p>
+<p>At around 5,400 feet Boulder gets meaningfully more ultraviolet exposure than a sea-level city. That does not break glass on its own, but it does accelerate the aging of the polyvinyl butyral interlayer bonding a laminated windshield and it degrades the resin in an older repair. A chip filled several years ago on a vehicle that lives outdoors here is worth a look, particularly if the repair has started to yellow or lift.</p>
 
 <div class="callout">
 <p><b>Access is the thing to plan in Boulder.</b> Downtown and the Hill mean narrow alleys, permit parking and loading windows. Give us a rough idea of where the vehicle sits and when it is reachable, and we will schedule around the restriction rather than arriving into one.</p>
@@ -494,10 +491,10 @@ module.exports = { SERVICES, CITIES, PAGES: [
 <p>Boulder proper including downtown, the Hill, Table Mesa, North Boulder and Gunbarrel, plus Louisville, Lafayette, Superior, Erie, Niwot and Longmont. We will go up the canyons to Nederland, Jamestown and Ward, though for those we ask for a bit more scheduling flexibility — the drive is slow and the weather changes the plan more often than it does on the flat.</p>
 `,
   faq: [
-    { q: 'Do you service the university and research park fleets?', a: 'Yes. Institutional and research fleets are a good fit for our account structure, which handles purchase-order invoicing and per-unit service records — usually a requirement rather than a nicety for organisations with procurement processes. We will run a service day on site and work through the vehicles in one visit.' },
+    { q: 'Do you service the university and research park fleets?', a: 'Yes. Institutional and research fleets are a good fit for our account structure, which handles purchase-order invoicing and per-unit service records — usually a requirement rather than a nicety for organizations with procurement processes. We will run a service day on site and work through the vehicles in one visit.' },
     { q: 'Can you come up the canyon?', a: 'Yes, to Nederland, Jamestown, Ward and the surrounding communities. We just ask for a little more flexibility on timing, because the drive is slow and canyon weather changes plans more readily than it does down on the flat. Winter appointments up there occasionally get moved a day.' },
-    { q: 'I have several small chips from a windstorm. Can they all be filled?', a: 'Sometimes, but it depends on how tightly clustered they are. Individually separated breaks across a windshield are usually all repairable. A cluster in one area often is not, because the glass in that zone has already lost too much integrity for the repairs to hold. We will look and tell you honestly which way it falls.' },
-    { q: 'Does high-altitude sun really affect a windshield?', a: 'Not by breaking it, but by ageing it. Extra ultraviolet exposure degrades the plastic interlayer bonding a laminated windshield over time and it breaks down the resin in older repairs. If you have a repair from several years ago on a vehicle that lives outside, and it has started to yellow or lift at the edges, it is worth a look.' },
+    { q: 'I have several small chips from a windstorm. Can they all be filled?', a: 'Sometimes, but it depends on how tightly clustered they are. Individually separated breaks across a windshield are usually all repairable. A cluster in one area often is not, because the glass in that zone has already lost too much integrity for the repairs to hold. We will look and tell you which way it falls.' },
+    { q: 'Does high-altitude sun really affect a windshield?', a: 'Not by breaking it, but by aging it. Extra ultraviolet exposure degrades the plastic interlayer bonding a laminated windshield over time and it breaks down the resin in older repairs. If you have a repair from several years ago on a vehicle that lives outside, and it has started to yellow or lift at the edges, it is worth a look.' },
     { q: 'Do you cover Louisville, Lafayette and Erie?', a: 'Yes — all of them, along with Superior, Niwot and Longmont, at no extra charge. Those communities sit comfortably inside our normal service area and often get shorter lead times than Boulder itself, because access and parking are simpler.' },
   ],
 },
@@ -528,13 +525,13 @@ module.exports = { SERVICES, CITIES, PAGES: [
 <p>US-85 through Greeley and US-34 running east-west carry a heavy mix of agricultural haulage, energy service vehicles and regional freight. These are high-speed roads with a lot of loaded trucks, and loaded trucks shed material. During harvest the pattern intensifies sharply — grain, sugar beet and silage haulage runs at volume, and the trailers throw crop debris and road material for weeks at a time.</p>
 
 <h2>Gravel, and a lot of it</h2>
-<p>Weld County maintains a vast grid of unpaved county roads, and a large share of the working traffic here spends part of every day on them. Gravel road damage behaves differently from highway damage: the impacts are lower-speed but far more frequent, and they cluster low on the windshield where the tyre spray reaches. Vehicles that live on lease roads often accumulate a scatter of small pits over a season rather than taking one dramatic hit, and that pitting eventually causes enough glare at low sun angles to warrant replacement in its own right.</p>
+<p>Weld County maintains a vast grid of unpaved county roads, and a large share of the working traffic here spends part of every day on them. Gravel road damage behaves differently from highway damage: the impacts are lower-speed but far more frequent, and they cluster low on the windshield where the tire spray reaches. Vehicles that live on lease roads often accumulate a scatter of small pits over a season rather than taking one dramatic hit, and that pitting eventually causes enough glare at low sun angles to warrant replacement in its own right.</p>
 
 <h2>Energy sector vehicles</h2>
 <p>Weld County's oil and gas activity puts a lot of pickups, water haulers, vacuum trucks and service rigs on rough access roads all day. Those units run hard, they are expensive to have standing idle, and their drivers rarely have a spare afternoon for a shop appointment. Site-based service is the only thing that works, so that is what we do — pad, yard or wherever the unit is parked between jobs.</p>
 
 <h2>Agricultural equipment glass</h2>
-<p>Tractor, combine, sprayer and telehandler cabs are a specialism of their own. The glass is frequently curved, sometimes tinted, often bonded in ways that differ significantly from automotive practice, and it is almost always sourced against the machine's serial number rather than a VIN. Lead times run longer than automotive glass as a result.</p>
+<p>Tractor, combine, sprayer and telehandler cabs are a specialty of their own. The glass is frequently curved, sometimes tinted, often bonded in ways that differ significantly from automotive practice, and it is almost always sourced against the machine's serial number rather than a VIN. Lead times run longer than automotive glass as a result.</p>
 <p>The practical implication: if a cab window breaks in the middle of harvest you want it reported immediately rather than at the end of the week, because the sourcing is the long pole. Send us the make, model and serial plate and we will start chasing the part the same day.</p>
 
 <div class="callout">
@@ -548,7 +545,7 @@ module.exports = { SERVICES, CITIES, PAGES: [
     { q: 'Do you replace glass on tractors and combines?', a: 'Yes — cab glass on tractors, combines, sprayers, telehandlers and loaders. It is sourced against the machine’s serial number rather than a VIN, and lead times are longer than automotive glass. Send us the make, model and serial plate as early as you can and we will start chasing the part immediately.' },
     { q: 'Can you come out to a lease road or a field?', a: 'Yes, and we do it regularly. What we need is the machine or vehicle on reasonably level ground with room to work at the front, and directions that actually get us there — county road references are perfectly fine. We carry our own power, so there is no requirement for a supply on site.' },
     { q: 'My windshield is pitted rather than cracked. Is that fixable?', a: 'Pitting cannot be repaired — resin fills a discrete break, not thousands of tiny surface impacts. Once pitting scatters enough light to cause real glare at sunrise and sunset, replacement is the only fix. It is one of the most common reasons gravel-road vehicles in Weld County need glass without ever having taken a single serious hit.' },
-    { q: 'How fast can you handle hail damage across a fleet?', a: 'We will come out and assess every unit, repair what is repairable on the spot, and quote the replacements as one job. The honest constraint after a widespread storm is glass supply rather than our capacity — specific windshields can go on national backorder for weeks. Getting the claim reported and the units in the queue early is what shortens the wait.' },
+    { q: 'How fast can you handle hail damage across a fleet?', a: 'We will come out and assess every unit, repair what is repairable on the spot, and quote the replacements as one job. The real constraint after a widespread storm is glass supply rather than our capacity — specific windshields can go on national backorder for weeks. Getting the claim reported and the units in the queue early is what shortens the wait.' },
     { q: 'Do you cover Windsor, Eaton and the smaller towns?', a: 'Yes — Evans, Garden City, LaSalle, Gilcrest, Platteville, Kersey, Eaton, Ault, Pierce, Windsor, Severance, Johnstown and Milliken are all inside our normal service area with no travel charge. Farm and feedlot addresses included.' },
   ],
 },
@@ -594,10 +591,10 @@ module.exports = { SERVICES, CITIES, PAGES: [
 </div>
 
 <h2>Where we cover in Douglas County</h2>
-<p>Castle Rock including the Meadows, Founders Village, Crystal Valley and the Plum Creek area, plus Castle Pines, Sedalia, Franktown, Larkspur, Parker, Lone Tree and Highlands Ranch. Job site and development addresses are routine — a lot subdivision reference or a set of coordinates works just as well as a street address if the road is not on the map yet.</p>
+<p>Castle Rock including the Meadows, Founders Village, Crystal Valley and the Plum Creek area, plus Castle Pines, Sedalia, Franktown, Larkspur, Parker, Lone Tree and Highlands Ranch. Job site and development addresses are routine here. Job site and development addresses are routine — a lot subdivision reference or a set of coordinates works just as well as a street address if the road is not on the map yet.</p>
 `,
   faq: [
-    { q: 'Do you charge extra to come to Castle Rock?', a: 'No. Castle Rock is the southern end of our normal service corridor and there is no travel charge, and the same goes for Castle Pines, Sedalia, Franktown, Larkspur and Elizabeth. Beyond Larkspur toward Monument we will tell you honestly whether the trip makes sense or whether a Colorado Springs company is the better call.' },
+    { q: 'Do you charge extra to come to Castle Rock?', a: 'No. Castle Rock is the southern end of our normal service corridor and there is no travel charge, and the same goes for Castle Pines, Sedalia, Franktown, Larkspur and Elizabeth. Beyond Larkspur toward Monument we will tell you straight whether the trip makes sense or whether a Colorado Springs company is the better call.' },
     { q: 'Can you come to a construction site or a new development?', a: 'Yes, and it is a good part of what we do here. We need the vehicle on level ground with clear space at the front, and directions that work — a lot number or a pin dropped on a map is completely fine when the road does not exist on the map yet.' },
     { q: 'I picked up a chip on the Gap. How urgent is it?', a: 'More urgent than at lower elevation. The daily temperature swing on the Palmer Divide is wide, and the freeze-thaw cycle is what drives a chip into a crack. A break that would sit stable for weeks in Denver can run overnight up here. If you can get it looked at within a few days, do.' },
     { q: 'Do you cover Parker and Highlands Ranch too?', a: 'Yes, both, along with Lone Tree and Castle Pines — all inside the normal service area with no travel charge. They are generally easier to schedule than Castle Rock itself because they are closer to the metro and closer to our vans.' },

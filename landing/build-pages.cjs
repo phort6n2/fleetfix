@@ -501,6 +501,16 @@ for (const p of PAGES) {
   }
 }
 
+/* Dialect guard. This is a US business; "windscreen" and "tyre" are its core
+   product nouns and must never appear. A sweep once fixed 47 of these, so the
+   check exists to stop them creeping back in. */
+const BRITISH = /\b(windscreen|tyres?|car parks?|postcodes?|roadworks|centre|centres|itemised|organis(ed|ation|ations)|prioritise|sceptical|levelled|ageing|programme|favour|favours|manoeuvre|specialism|fortnight|honour|honoured|recognise|enquir(y|ies)|behaviour|travelled|authorise|unauthorised|multi-storey|whilst|amongst)\b/gi;
+for (const p of PAGES) {
+  const html = fs.readFileSync(path.join(OUTDIR, p.slug || '.', 'index.html'), 'utf8');
+  const hits = [...new Set((stripTags(html).match(BRITISH) || []).map((h) => h.toLowerCase()))];
+  if (hits.length) problems.push(`${p.slug || '/'}: British spelling — ${hits.join(', ')}`);
+}
+
 /* city-page body overlap — the doorway-page guard */
 function shingles(text, n = 5) {
   const w = text.toLowerCase().match(/[a-z0-9']+/g) || [];
