@@ -338,6 +338,15 @@ function jsonLd(page) {
 /* ------------------------------------------------------------ page render */
 const template = fs.readFileSync(path.join(__dirname, 'fleetfix.html'), 'utf8');
 
+/* Emit the literal gtag loader so it is present in the served HTML, not built
+   at runtime from a string. FF_CONFIG stays the single source of truth for the
+   ID — it is read back out of the template here, so the two can never drift. */
+const TAG_ID = (template.match(/GOOGLE_ADS_ID:\s*"([^"]*)"/) || [])[1]
+            || (template.match(/GA4_ID:\s*"([^"]*)"/) || [])[1] || '';
+const gtagScript = TAG_ID
+  ? `<!-- Google tag (gtag.js) -->\n<script async src="https://www.googletagmanager.com/gtag/js?id=${TAG_ID}"></script>`
+  : '<!-- Google tag not configured: set GOOGLE_ADS_ID in the FF_CONFIG block below -->';
+
 function applyBase(s) {
   // /PREFIX is a sentinel that appears nowhere else, so replace it wherever it
   // occurs rather than anchoring to `="`. Anchoring misses the 2nd and 3rd URL
@@ -401,6 +410,7 @@ function render(page) {
     FOOTER_NOTE: footerNote,
     JSONLD: jsonLd(page),
     GHL_SCRIPTS: ghlScripts,
+    GTAG_SCRIPT: gtagScript,
   };
 
   html = html.replace(/\{\{([A-Z0-9_]+)\}\}/g, (m, k) => {
@@ -548,6 +558,12 @@ for (const p of PAGES) {
     if (occurrences > 1) {
       problems.push(`${p.slug || '/'}: call asset number appears ${occurrences}x (footer only)`);
     }
+  }
+
+  // Google Ads verifies tag installation by scanning HTML. A dynamically
+  // injected tag works but reads as "not installed" in the Ads UI.
+  if (TAG_ID && !html.includes(`<script async src="https://www.googletagmanager.com/gtag/js?id=${TAG_ID}"></script>`)) {
+    problems.push(`${p.slug || '/'}: no literal gtag <script> tag for ${TAG_ID}`);
   }
 
   if (!/rel="canonical"/.test(html)) problems.push(`${p.slug || '/'}: no canonical`);

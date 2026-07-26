@@ -257,11 +257,17 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
     // they load either way. That is intended: dynamic number insertion has to
     // run for call attribution regardless of whether the Ads tag is live.
     // Count them separately instead of failing on them.
-    let external = 0, dni = 0;
+    let external = 0, dni = 0, tagLoads = 0;
     page.on('request', (r) => {
       const u = r.url();
       if (u.startsWith(BASE)) return;
       if (u.includes('backend.leadconnectorhq.com')) { dni++; return; }
+      // gtag.js is loaded by a literal <script> tag emitted at BUILD time so
+      // Google Ads' HTML-scanning tag detector can see it. It therefore loads
+      // regardless of the runtime FF_CONFIG this scenario blanks. That is safe:
+      // the guard that matters is that no gtag CALLS fire, asserted below by
+      // dataLayer being empty, so the script loads and reports nothing.
+      if (u.includes('googletagmanager.com')) { tagLoads++; return; }
       external++;
     });
     // Blank the live IDs for this scenario so the no-op path can be exercised

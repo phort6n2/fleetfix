@@ -9,6 +9,7 @@
      Every value may be left empty: the block below no-ops when nothing is
      configured, so the site is safe to deploy before the Ads account exists.
      ========================================================================== -->
+{{GTAG_SCRIPT}}
 <script>
   window.FF_CONFIG = {
     GOOGLE_ADS_ID:    "AW-18345617633",
@@ -41,10 +42,11 @@
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () { window.dataLayer.push(arguments); };
     gtag('js', new Date());
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(primary);
-    document.head.appendChild(s);
+    // gtag.js itself is loaded by a LITERAL <script> tag emitted above by the
+    // build. It used to be injected here with createElement, which worked at
+    // runtime but left no <script src="...gtag/js?id=..."> in the served HTML —
+    // so Google Ads' tag detector, which scans HTML rather than running it,
+    // reported the tag as missing from every page.
     if (c.GOOGLE_ADS_ID) {
       gtag('config', c.GOOGLE_ADS_ID, { allow_enhanced_conversions: true });
     }
