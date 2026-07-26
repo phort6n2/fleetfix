@@ -570,6 +570,30 @@ for (const p of PAGES) {
   }
 }
 
+/* Style guard. These are the constructions that make copy read as machine-
+   written: dense em-dashes, and a handful of stock hedges used as tics. Caps,
+   not bans — one em-dash on a page is punctuation, twenty is a fingerprint.
+   Measured on VISIBLE prose only, so code comments and JSON-LD are exempt. */
+const TELLS = [
+  [/—/g, 2, 'em-dashes'],
+  [/\brather than\b/gi, 2, '"rather than"'],
+  [/\bnot just\b/gi, 1, '"not just X"'],
+  [/\bwhich is why\b/gi, 1, '"which is why"'],
+  [/\bgenuinely\b/gi, 1, '"genuinely"'],
+  [/\bconsiderably\b/gi, 1, '"considerably"'],
+  [/\bhonest(ly)?\b/gi, 2, '"honest/honestly"'],
+  [/\b(delve|tapestry|testament to|navigate the complexit|in today's|landscape of)\b/gi, 0, 'LLM boilerplate'],
+];
+for (const p of PAGES) {
+  const html = fs.readFileSync(path.join(OUTDIR, p.slug || '.', 'index.html'), 'utf8');
+  const main = (html.match(/<main[\s\S]*?<\/main>/) || [''])[0];
+  const text = stripTags(main);
+  for (const [re, cap, label] of TELLS) {
+    const n = (text.match(re) || []).length;
+    if (n > cap) problems.push(`${p.slug || '/'}: ${n} ${label} in visible copy (max ${cap})`);
+  }
+}
+
 /* Dialect guard. This is a US business; "windscreen" and "tyre" are its core
    product nouns and must never appear. A sweep once fixed 47 of these, so the
    check exists to stop them creeping back in. */
