@@ -120,12 +120,34 @@ borrowed rating into FleetFix's own. Build assertions fail if a page shows a
 rating without naming the source, or if `aggregateRating` appears while the
 reviews are attributed.
 
-**When FleetFix gets its own profile** (free, ~10 minutes, and needed anyway for
-local search and Ads location/call assets): put FleetFix's Place ID and CID in
-`REVIEWS`, set `expectName` to match, clear `attributedTo` in both
-`site.config.cjs` and `reviews.json`, and the site switches itself back to
-first-person wording and starts emitting `aggregateRating` again. Both paths are
-covered by the build assertions.
+### Switching to FleetFix's own profile
+
+Create the Google Business Profile first — it's free, takes about ten minutes,
+and is needed anyway for local search and for Ads location/call assets. Then
+edit **`site.config.cjs` only**:
+
+```js
+REVIEWS: {
+  attributedTo: '',                    // clear it
+  attributionNote: '',                 // clear it
+  placeId: '<FleetFix Place ID>',
+  mapsCid: '<FleetFix CID>',
+  expectName: /fleet\s*fix/i,          // the identity guard must follow
+  ...
+}
+```
+
+Then run `npm run reviews:landing` (or wait for Monday's workflow). **Do not
+hand-edit `reviews.json`** — the fetcher rewrites it, stamping the new
+provenance, and that is what actually flips the site to first-person wording
+and restores `aggregateRating`.
+
+Until that fetch runs, `reviews.json` still holds HV's data and the site keeps
+attributing it. That is deliberate: there is no window in which HV's numbers
+appear as FleetFix's. The build prints a warning while the two disagree, so a
+half-finished switch is visible rather than silent.
+
+Both directions are covered by the build assertions.
 
 `landing/reviews.json` is currently a **seed**, not fetched: the rating and
 count come from HV's own published `aggregateRating`, cross-checked against the

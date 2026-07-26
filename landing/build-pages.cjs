@@ -137,6 +137,19 @@ const RV = SITE.REVIEWS;
    it as a fallback for hand-seeded data. */
 const ATTRIB = ((reviews && reviews.attributedTo) || RV.attributedTo || '').trim();
 
+// Make a half-finished switchover visible instead of silent. If the config has
+// been pointed at a new source but reviews.json still holds the old business's
+// numbers, the site correctly keeps attributing them — but the operator needs
+// to know a fetch is still owed.
+if (reviews && (reviews.attributedTo || '') !== (RV.attributedTo || '')) {
+  console.warn(
+    `! reviews.json still holds ${reviews.attributedTo ? `"${reviews.attributedTo}"` : 'un-attributed'} data ` +
+    `while site.config.cjs says ${RV.attributedTo ? `"${RV.attributedTo}"` : 'un-attributed'}.\n` +
+    '  Attribution follows the DATA, so nothing is misrepresented — but run\n' +
+    '  `npm run reviews:landing` to fetch from the new source and complete the switch.'
+  );
+}
+
 function mapsLink() {
   if (reviews && reviews.mapsUri) return reviews.mapsUri;
   if (RV.mapsCid) return `https://www.google.com/maps?cid=${encodeURIComponent(RV.mapsCid)}`;
