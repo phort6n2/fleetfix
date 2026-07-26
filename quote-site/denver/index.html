@@ -11,8 +11,12 @@
      ========================================================================== -->
 <script>
   window.FF_CONFIG = {
-    GOOGLE_ADS_ID:    "",              // AW-XXXXXXXXXX
-    GOOGLE_ADS_LABEL: "",              // the part after the slash
+    GOOGLE_ADS_ID:    "AW-18345617633",
+    // "Submit lead form" conversion action. Together these produce
+    // send_to: "AW-18345617633/dVIiCI-6vdYcEOHR76tE".
+    // Set this action to PAGE LOAD in the Ads UI, not click — the page fires it
+    // explicitly, and only once the webhook has confirmed the lead was received.
+    GOOGLE_ADS_LABEL: "dVIiCI-6vdYcEOHR76tE",
     GA4_ID:           "",              // optional
     LEAD_VALUE:       0,
     CURRENCY:         "USD",
@@ -331,6 +335,10 @@ a.card:hover .more{gap:9px}
 
 /* reviews */
 .rating-hd{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-bottom:26px}
+/* Centred to sit with the centred prose and FAQ, rather than hanging left in
+   an otherwise full-width band. */
+.rating-hd.is-centred{justify-content:center;text-align:center}
+.rev-note{margin:0 auto;max-width:60ch;text-align:center;font-size:.95rem;color:var(--muted)}
 .stars{display:inline-flex;gap:2px;color:var(--amber)}
 .rating-hd .score{font-size:1.5rem;font-weight:800;color:var(--ink);line-height:1}
 .rating-hd .count{font-size:.92rem;color:var(--muted)}
@@ -642,19 +650,19 @@ body{padding-bottom:76px}
 
 <section class="band band-alt" aria-labelledby="rev-h">
   <div class="wrap">
-    <div class="sec-hd">
+    <div class="sec-hd mid">
       <h2 id="rev-h">What customers say about our team</h2>
       <p>FleetFix Glass is run by the team behind HV Auto Glass Denver. FleetFix is newer and is still building its own review profile, so these are HV Auto Glass Denver’s Google reviews.</p>
     </div>
-    <div class="rating-hd">
+    <div class="rating-hd is-centred">
       <span class="stars" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.4l6.5-.9L12 2.6Z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.4l6.5-.9L12 2.6Z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.4l6.5-.9L12 2.6Z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.4l6.5-.9L12 2.6Z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.4l6.5-.9L12 2.6Z"/></svg></span>
       <span class="score">4.8</span>
       <span class="count">from 191 Google reviews
         for HV Auto Glass Denver</span>
       <a href="https://www.google.com/maps?cid=13934619566903784372" rel="noopener nofollow" target="_blank">Read them on Google</a>
     </div>
-    <p style="margin:0;font-size:.95rem;color:var(--muted)">Individual reviews are on
-         HV Auto Glass Denver’s Google listing, where you can read them in full and see who wrote them.</p>
+    <p class="rev-note">Individual reviews are on HV Auto Glass Denver’s Google listing,
+         where you can read them in full and see who wrote them.</p>
   </div>
 </section>
 

@@ -169,16 +169,16 @@ function reviewsSection() {
   // appear without saying whose rating it is.
   const body = quotes
     ? `<div class="grid grid-3">${quotes}</div>`
-    : `<p style="margin:0;font-size:.95rem;color:var(--muted)">Individual reviews are on
-         ${esc(who)}’s Google listing, where you can read them in full and see who wrote them.</p>`;
+    : `<p class="rev-note">Individual reviews are on ${esc(who)}’s Google listing,
+         where you can read them in full and see who wrote them.</p>`;
 
   return `<section class="band band-alt" aria-labelledby="rev-h">
   <div class="wrap">
-    <div class="sec-hd">
+    <div class="sec-hd mid">
       <h2 id="rev-h">${ATTRIB ? 'What customers say about our team' : 'What customers say'}</h2>
       ${ATTRIB ? `<p>${esc(RV.attributionNote)}</p>` : ''}
     </div>
-    <div class="rating-hd">
+    <div class="rating-hd is-centred">
       <span class="stars" aria-hidden="true">${STAR.repeat(Math.round(reviews.rating))}</span>
       <span class="score">${reviews.rating.toFixed(1)}</span>
       <span class="count">from ${reviews.count} Google review${reviews.count === 1 ? '' : 's'}

@@ -49,6 +49,12 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
     const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, deviceScaleFactor: 1 });
     await guardCtx(ctx);
     const page = await ctx.newPage();
+    // The shipped config loads a real Google tag. This sandbox has no outbound
+    // network, so without a stub every page reports ERR_CONNECTION_RESET and
+    // the console check drowns in false positives.
+    await page.route('**/*', (r) => r.request().url().startsWith(BASE)
+      ? r.continue()
+      : r.fulfill({ status: 200, contentType: 'text/javascript', body: '' }));
     const errors = [];
     page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
     page.on('pageerror', (e) => errors.push(String(e)));
@@ -243,12 +249,15 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
     const page = await ctx.newPage();
     let external = 0;
     page.on('request', (r) => { if (!r.url().startsWith(BASE)) external++; });
-    // Blank the live webhook for this scenario so the "no destination" path can
-    // be exercised without posting a real lead into the CRM.
+    // Blank the live IDs for this scenario so the no-op path can be exercised
+    // without loading a real tag or posting a real lead into the CRM.
     await page.addInitScript(() => {
       Object.defineProperty(window, 'FF_CONFIG', {
         configurable: true,
-        set(v) { v.GHL_WEBHOOK_URL = ''; this.__v = v; },
+        set(v) {
+          v.GHL_WEBHOOK_URL = ''; v.GOOGLE_ADS_ID = ''; v.GA4_ID = '';
+          this.__v = v;
+        },
         get() { return this.__v; },
       });
     });
@@ -266,6 +275,71 @@ const note = (m) => { fails.push(m); console.log('  ✗ ' + m); };
     const alerted = await page.isVisible('#ff-alert.on');
     if (!alerted) note('empty webhook config did not surface an error to the user');
     else console.log('  no tags fired, no external requests, lead not silently dropped');
+    await ctx.close();
+  }
+
+  /* ------- 3b. the REAL shipped config, end to end ------- */
+  console.log('\nTracking (shipped config — real Ads ID + label)');
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    await guardCtx(ctx);
+    const page = await ctx.newPage();
+    await page.route('**/*', (r) => {
+      const u = r.request().url();
+      if (u.startsWith(BASE)) return r.continue();
+      return r.fulfill({ status: 200, contentType: 'text/javascript', body: '' });
+    });
+    await page.route('**/googletagmanager.com/**', (r) =>
+      r.fulfill({ status: 200, contentType: 'text/javascript', body: 'window.__gtagLoaded=1;' }));
+    let posted = false;
+    await page.route('**/hooks.example.test/**', (r) => {
+      posted = true;
+      return r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
+    });
+    // Redirect only the webhook; leave the Ads config exactly as shipped.
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'FF_CONFIG', {
+        configurable: true,
+        set(v) { v.GHL_WEBHOOK_URL = 'https://hooks.example.test/x'; this.__v = v; },
+        get() { return this.__v; },
+      });
+    });
+
+    await page.goto(BASE + '/?gclid=SHIPPED1', { waitUntil: 'load' });
+    const cfg = await page.evaluate(() => (window.dataLayer || [])
+      .map((a) => Array.from(a))
+      .find((a) => a[0] === 'config' && String(a[1]).startsWith('AW-')));
+    if (!cfg) note('shipped config did not fire a gtag config');
+    else if (!cfg[2] || cfg[2].allow_enhanced_conversions !== true) {
+      note('shipped config missing allow_enhanced_conversions');
+    }
+
+    await page.fill('#f-name', 'Shipped Test');
+    await page.fill('#f-phone', '7205550134');
+    await page.fill('#f-email', 'shipped@fleet.test');
+    await page.fill('#f-zip', '80214');
+    await page.click('#ff-submit');
+    await page.waitForSelector('#ff-thanks.on', { timeout: 8000 });
+
+    if (!posted) note('shipped config did not deliver the lead');
+
+    // Assert the ACTUAL send_to the live site will report, not a stand-in.
+    const EXPECT_SEND_TO = 'AW-18345617633/dVIiCI-6vdYcEOHR76tE';
+    const dl = await page.evaluate(() => (window.dataLayer || []).map((a) => Array.from(a)));
+    const convs = dl.filter((a) => a[0] === 'event' && a[1] === 'conversion');
+    if (convs.length !== 1) {
+      note(`expected exactly 1 conversion from the shipped config, got ${convs.length}`);
+    } else {
+      const c = convs[0][2];
+      if (c.send_to !== EXPECT_SEND_TO) note(`send_to is "${c.send_to}", expected "${EXPECT_SEND_TO}"`);
+      if (!String(c.transaction_id).includes('SHIPPED1')) {
+        note(`gclid missing from transaction_id: ${c.transaction_id}`);
+      }
+    }
+    const ud = dl.find((a) => a[0] === 'set' && a[1] === 'user_data');
+    if (!ud) note('shipped config sent no user_data for enhanced conversions');
+    else if (ud[2].phone_number !== '+17205550134') note('user_data phone not E.164');
+    if (!fails.length) console.log(`  real send_to verified: ${EXPECT_SEND_TO}`);
     await ctx.close();
   }
 
